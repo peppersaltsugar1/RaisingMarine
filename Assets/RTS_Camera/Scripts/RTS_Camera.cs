@@ -196,7 +196,7 @@ namespace RTS_Cam
             else
                 Move();
 
-            HeightCalculation();
+            //HeightCalculation();
             Rotation();
             LimitPosition();
         }
@@ -222,10 +222,11 @@ namespace RTS_Cam
             {
                 Vector3 desiredMove = new Vector3();
 
-                Rect leftRect = new Rect(0, 0, screenEdgeBorder, Screen.height);
-                Rect rightRect = new Rect(Screen.width - screenEdgeBorder, 0, screenEdgeBorder, Screen.height);
-                Rect upRect = new Rect(0, Screen.height - screenEdgeBorder, Screen.width, screenEdgeBorder);
-                Rect downRect = new Rect(0, 0, Screen.width, screenEdgeBorder);
+                Rect leftRect = new Rect(-1, -1, screenEdgeBorder + 1, Screen.height + 2);
+                Rect rightRect = new Rect(Screen.width - screenEdgeBorder, -1, screenEdgeBorder + 1, Screen.height + 2);
+                Rect upRect = new Rect(-1, Screen.height - screenEdgeBorder, Screen.width + 2, screenEdgeBorder + 1);
+                Rect downRect = new Rect(-1, -1, Screen.width + 2, screenEdgeBorder + 1);
+
 
                 desiredMove.x = leftRect.Contains(MouseInput) ? -1 : rightRect.Contains(MouseInput) ? 1 : 0;
                 desiredMove.z = upRect.Contains(MouseInput) ? 1 : downRect.Contains(MouseInput) ? -1 : 0;
@@ -238,7 +239,7 @@ namespace RTS_Cam
                 m_Transform.Translate(desiredMove, Space.Self);
             }       
         
-            if(usePanning && Input.GetKey(panningKey) && MouseAxis != Vector2.zero)
+            if(usePanning && Input.GetKey(panningKey) && MouseAxis != Vector2.zero) 
             {
                 Vector3 desiredMove = new Vector3(-MouseAxis.x, 0, -MouseAxis.y);
 
@@ -250,6 +251,8 @@ namespace RTS_Cam
                 m_Transform.Translate(desiredMove, Space.Self);
             }
         }
+
+        
 
         /// <summary>
         /// calcualte height

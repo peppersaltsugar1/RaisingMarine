@@ -22,6 +22,7 @@ public class PlayerControl : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         animator = GetComponent<Animator>();
+
     }
 
     void Update()
