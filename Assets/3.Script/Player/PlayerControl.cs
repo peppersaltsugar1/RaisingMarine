@@ -16,6 +16,8 @@ public class PlayerControl : MonoBehaviour
     private bool isMove;
     private Vector3 destination;
 
+
+    public bool isDead;
     private void Awake()
     {
         camera = Camera.main;
