@@ -12,7 +12,14 @@ public class Chase : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-            Debug.Log("플레이어가들어옴");
+        if (other.CompareTag("Player"))
+        {
+            monster.target = other.transform;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
         if (other.CompareTag("Player"))
         {
             monster.target = other.transform;

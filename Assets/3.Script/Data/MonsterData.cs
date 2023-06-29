@@ -8,8 +8,8 @@ public class MonsterData : ScriptableObject
     public int MaxHp;
     public int Atk;
     public int Def;
-    public int AtkSpeed;
+    public float AtkSpeed;
     public int AtkRange;
-    public int MoveSpeed;
+    public float MoveSpeed;
 
 }

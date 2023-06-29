@@ -8,12 +8,18 @@ public class Monster : MonoBehaviour, ITakeDamage
 {
     UnityEvent onDeath;
     public int MaxHp { get; protected set; }
-    public int Atk{ get; protected set; }
+    public int Atk { get; protected set; }
     public int Def { get; protected set; }
-    public int AtkSpeed { get; protected set; }
+    public float AtkSpeed { get; protected set; }
     public int AtkRange { get; protected set; }
-    public int MoveSpeed { get; protected set; }
+    public float MoveSpeed { get; protected set; }
     public int currentHp;
+    private bool canAttack;
+
+    public bool isdead;
+
+    [SerializeField] public float timebetAttack = 0.5f;
+    public float lastAttackTimebet;
 
     public Transform target; // 추적할 대상
     public NavMeshAgent agent; // 경로계산 AI 에이전트
@@ -27,6 +33,7 @@ public class Monster : MonoBehaviour, ITakeDamage
         //onDeath.AddListener(PointUp);
         agent = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
+        canAttack = true;
     }
     public void TakeDamage(int damage)
     {
@@ -50,8 +57,13 @@ public class Monster : MonoBehaviour, ITakeDamage
 
     public void Attack()
     {
-        enemyAnimator.SetBool("isMove", false);
-        enemyAnimator.SetBool("isAttack", true);
+        if (canAttack)
+        {
+            //enemyAnimator.SetBool("isMove", false);
+            ////enemyAnimator.SetBool("isAttack", true);
+            //enemyAnimator.SetTrigger("onAttack");
+            StartCoroutine(Attack_co());
+        }
     }
 
     public void Die()
@@ -69,4 +81,17 @@ public class Monster : MonoBehaviour, ITakeDamage
 
     }
 
+    public void EndAttack()
+    {
+        enemyAnimator.ResetTrigger("onAttack");
+    }
+
+    IEnumerator Attack_co()
+    {
+        canAttack = false;
+        enemyAnimator.SetBool("isMove", false);
+        enemyAnimator.SetTrigger("onAttack");
+        yield return new WaitForSeconds(AtkSpeed);
+        canAttack = true;
+    }
 }

@@ -16,7 +16,6 @@ public class MonsterControl : Monster
     public AudioClip hitSound; // 피격시 재생할 소리
 
 
-    private bool isdead;
 
 
     private bool hasTarget
@@ -53,10 +52,9 @@ public class MonsterControl : Monster
     {
         if (hasTarget)
         {
-            Debug.Log(Vector3.Distance(target.position, transform.position));
             if (Vector3.Distance(target.position, transform.position) <= AtkRange)
             {
-                enemyAnimator.SetBool("isAttack", true);
+                Attack();
             }
             else
             {
@@ -76,6 +74,8 @@ public class MonsterControl : Monster
         }
 
     }
+
+
 
    
 }
