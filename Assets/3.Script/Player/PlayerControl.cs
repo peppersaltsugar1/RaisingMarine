@@ -27,11 +27,15 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     [SerializeField] public int AtkRange=5;
     [SerializeField] public int MoveSpeed=5;
 
+    [Header("플레이어 파티클")]
+    [SerializeField] private ParticleSystem atkParticle;
+    [SerializeField] private ParticleSystem gunFireParticle;
+
     public int currentHp;
     public bool isDead;
     public Transform target;
 
-    private CapsuleCollider playerAtkBox;
+    [SerializeField]private CapsuleCollider playerAtkBox;
 
 
     private void Awake()
@@ -41,7 +45,6 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         agent.updateRotation = false;
         animator = GetComponent<Animator>();
         currentHp = MaxHp;
-        playerAtkBox = GetComponentInChildren<CapsuleCollider>();
 
     }
 
@@ -55,12 +58,23 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
                 SetDestination(hit.point);
             }
         }
-
         LookMoveDirection();
+        //if (target != null&& Vector3.Distance(target.position, transform.position) <= AtkRange)
+        //{
+        //    Attack();
+        //}
+        if (target != null)
+        {
+            Attack();
+        }
+
     }
 
     private void SetDestination(Vector3 dest)
     {
+        target = null;
+        EndAttack();
+        playerAtkBox.enabled = false;
         agent.SetDestination(dest);
         destination = dest;
         isMove = true;
@@ -77,6 +91,8 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
             {
                 isMove = false;
                 animator.SetBool("isMove", isMove);
+                playerAtkBox.enabled = true;
+
                 return;
             }
 
@@ -105,6 +121,24 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
             currentHp = 0;
             //Die();
         }
+    }
+    private void Attack()
+    {
+        animator.SetBool("isMove", false);
+        var dir = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z) - transform.position;  // 변경
+        animator.transform.forward = dir;
+        animator.SetBool("isAttack", true);
+        gunFireParticle.Play();
+        atkParticle.transform.position = target.transform.position;
+        atkParticle.Play();
+
+    }
+
+    public void EndAttack()
+    {
+        animator.SetBool("isAttack", false);
+        gunFireParticle.Stop();
+
     }
 }
 
