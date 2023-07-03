@@ -64,8 +64,8 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
                 RaycastHit hit;
                 if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit)  )
                 {
-                    Debug.Log(hit.collider.transform.tag);
-                    if (hit.collider.transform.CompareTag("Enemy"))
+                    
+                    if (hit.collider.gameObject.layer==7)
                     {
                         target = hit.transform;
                     }
