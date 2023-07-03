@@ -20,12 +20,13 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
 
 
     [Header("플레이어 스탯")]
-    [SerializeField] public int MaxHp=200;
-    [SerializeField] public int Atk=10;
-    [SerializeField] public int Def=0;
-    [SerializeField] public int AtkSpeed;
-    [SerializeField] public int AtkRange=5;
-    [SerializeField] public int MoveSpeed=5;
+    [SerializeField] public int playerNum;
+    [SerializeField] public int MaxHp;
+    [SerializeField] public int Atk;
+    [SerializeField] public int Def;
+    [SerializeField] public float AtkSpeed;
+    [SerializeField] public int AtkRange;
+    [SerializeField] public int MoveSpeed;
 
     [Header("플레이어 파티클")]
     [SerializeField] private ParticleSystem atkParticle;
@@ -34,8 +35,11 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     public int currentHp;
     public bool isDead;
     public Transform target;
-
+    [Header("플레이어 공격관련")]
     [SerializeField]private CapsuleCollider playerAtkBox;
+    [SerializeField] public float timebetAttack = 0.5f;
+    public float lastAttackTimebet;
+    private bool canAtk;
 
 
     private void Awake()
@@ -45,40 +49,68 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         agent.updateRotation = false;
         animator = GetComponent<Animator>();
         currentHp = MaxHp;
+        canAtk = true;
+        playerNum = 1; //이건 나중에 대기방에 들어온 순서대로 번호를 부여해주는걸로 바꿔야함
 
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (!isDead)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit))
-            {
-                SetDestination(hit.point);
-            }
-        }
-        LookMoveDirection();
-        //if (target != null&& Vector3.Distance(target.position, transform.position) <= AtkRange)
-        //{
-        //    Attack();
-        //}
-        if (target != null)
-        {
-            Attack();
-        }
 
+            if (Input.GetMouseButton(1))
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit)  )
+                {
+                    Debug.Log(hit.collider.transform.tag);
+                    if (hit.collider.transform.CompareTag("Enemy"))
+                    {
+                        target = hit.transform;
+                    }
+                    else
+                    {
+                        SetDestination(hit.point);
+                    }
+
+                }
+            }
+            LookMoveDirection();
+            //if (target != null&& Vector3.Distance(target.position, transform.position) <= AtkRange)
+            //{
+            //    Attack();
+            //}
+            if (target != null && canAtk)
+            {
+                Attack();
+            }
+            if (agent.velocity.magnitude>0.0f)  // 변경
+            {
+                isMove = true;
+                animator.SetBool("isMove", isMove);
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                agent.isStopped = true;
+                isMove = false;
+                animator.SetBool("isMove", isMove);
+                playerAtkBox.enabled = true;
+            }
+
+        }
     }
 
     private void SetDestination(Vector3 dest)
     {
+        agent.isStopped = false;
         target = null;
         EndAttack();
         playerAtkBox.enabled = false;
         agent.SetDestination(dest);
         destination = dest;
         isMove = true;
-        animator.SetBool("isMove", isMove);
+        animator.SetBool("isMove", true);
     }
 
     // private void Move()
@@ -104,7 +136,6 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
 
     public void TakeDamage(int damage)
     {
-        Debug.Log("쳐맞음");
         int takeDamage;
         if (damage - Def <= 0)
         {
@@ -116,17 +147,19 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         }
 
         currentHp -= takeDamage;
+        Debug.Log(currentHp);
         if (currentHp <= 0)
         {
             currentHp = 0;
-            //Die();
+            Die();
         }
     }
     private void Attack()
     {
-        animator.SetBool("isMove", false);
+        canAtk = false;
         var dir = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z) - transform.position;  // 변경
         animator.transform.forward = dir;
+        animator.SetBool("isMove", false);
         animator.SetBool("isAttack", true);
         gunFireParticle.Play();
         atkParticle.transform.position = target.transform.position;
@@ -136,9 +169,35 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
 
     public void EndAttack()
     {
-        animator.SetBool("isAttack", false);
         gunFireParticle.Stop();
+        animator.SetBool("isAttack", false);
+        StartCoroutine(atkSpeed_co());
 
+    }
+    
+    private IEnumerator atkSpeed_co()
+    {
+        yield return new WaitForSeconds(AtkSpeed);
+        canAtk = true;
+    }
+
+    public void TakeDamage(int damage, int player)
+    {
+
+    }
+
+    private void Die()
+    {
+        StartCoroutine(Die_co());
+    }
+    private IEnumerator Die_co()
+    {
+        gunFireParticle.Stop();
+        animator.SetTrigger("isDead");
+        canAtk = false;
+        isDead = true;
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
     }
 }
 

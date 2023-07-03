@@ -11,5 +11,6 @@ public class MonsterData : ScriptableObject
     public float AtkSpeed;
     public int AtkRange;
     public float MoveSpeed;
+    public int score;
 
 }

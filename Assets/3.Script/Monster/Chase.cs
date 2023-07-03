@@ -20,9 +20,16 @@ public class Chase : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.TryGetComponent(out PlayerControl player))
         {
-            monster.target = other.transform;
+            if (player.isDead)
+            {
+                monster.target = null;
+            }
+            if (other.CompareTag("Player")&&!player.isDead)
+            {
+                monster.target = other.transform;
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         playerNum = 1; //플레이어 입장수의 따라서 바꿔줘야함
-        int[] score = new int[playerNum];
+        score = new int[playerNum];
         if (null == instance)
         {
             instance = this;

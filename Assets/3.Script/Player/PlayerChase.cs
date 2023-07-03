@@ -5,17 +5,27 @@ using UnityEngine;
 public class PlayerChase : MonoBehaviour
 {
     PlayerControl player;
+    CapsuleCollider chase;
     private void Start()
     {
         player = GetComponentInParent<PlayerControl>();
+        chase = GetComponent<CapsuleCollider>();
+        chase.radius = player.AtkRange;
+
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Enemy")&&player.target ==null )
+        if (other.TryGetComponent(out MonsterControl monster))
         {
-        Debug.Log("¹üÀ§µé¾î¿È");
-            player.target = other.transform;
+            if (monster.isdead)
+            {
+                player.target = null;
+            }
+            else if (other.CompareTag("Enemy") && player.target == null)
+            {
+                player.target = other.transform;
+            }
         }
     }
 

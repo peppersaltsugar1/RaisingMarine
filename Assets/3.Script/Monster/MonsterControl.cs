@@ -36,6 +36,7 @@ public class MonsterControl : Monster
     private void Start()
     {
         SetData(monsterdata);
+        currentHp = MaxHp;
     }
 
     private void SetData(MonsterData monsterdata)
@@ -47,10 +48,11 @@ public class MonsterControl : Monster
         AtkSpeed = monsterdata.AtkSpeed;
         MoveSpeed = monsterdata.MoveSpeed;
         agent.speed = MoveSpeed;
+        score = monsterdata.score;
     }
     private void Update()
     {
-        if (hasTarget)
+        if (hasTarget&&!isdead)
         {
             if (Vector3.Distance(target.position, transform.position) <= AtkRange)
             {

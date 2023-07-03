@@ -15,6 +15,7 @@ public class Monster : MonoBehaviour, ITakeDamage
     public float MoveSpeed { get; protected set; }
     public int currentHp;
     private bool canAttack;
+    public int score { get; protected set; }
 
     public bool isdead;
 
@@ -35,7 +36,7 @@ public class Monster : MonoBehaviour, ITakeDamage
         enemyAnimator = GetComponent<Animator>();
         canAttack = true;
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage,int playerNum)
     {
         int takeDamage;
         if (damage - Def <= 0)
@@ -51,7 +52,7 @@ public class Monster : MonoBehaviour, ITakeDamage
         if (currentHp <= 0)
         {
             currentHp = 0;
-            Die();
+            Die(playerNum,score);
         }
     }
 
@@ -66,19 +67,20 @@ public class Monster : MonoBehaviour, ITakeDamage
         }
     }
 
-    public void Die()
+    public void Die(int playernum,int score)
     {
         if (onDeath != null)
         {
             onDeath.Invoke();
         }
-        enemyAnimator.SetBool("isDie", true);
-
+        PointUp(playernum, score);
+        StartCoroutine(Die_co());
     }
 
-    public void PointUp()
+    public void PointUp(int playerNum,int score)
     {
-
+        GameManager.instance.score[playerNum - 1] += score;
+        Debug.Log(GameManager.instance.score[playerNum - 1]);
     }
 
     public void EndAttack()
@@ -93,5 +95,17 @@ public class Monster : MonoBehaviour, ITakeDamage
         enemyAnimator.SetTrigger("onAttack");
         yield return new WaitForSeconds(AtkSpeed);
         canAttack = true;
+    }
+    IEnumerator Die_co()
+    {
+        isdead = true;
+        enemyAnimator.SetTrigger("isDie");
+        agent.isStopped = true;
+        yield return new WaitForSeconds(3f);    
+        transform.gameObject.SetActive(false);
+    }
+
+    public void TakeDamage(int damage)
+    {
     }
 }
