@@ -15,6 +15,9 @@ public class MonsterControl : Monster
     public AudioClip deathSound; // 사망시 재생할 소리
     public AudioClip hitSound; // 피격시 재생할 소리
 
+    [SerializeField] ParticleSystem atk;
+    [SerializeField] ParticleSystem shoot;
+
 
 
 
@@ -76,8 +79,17 @@ public class MonsterControl : Monster
         }
 
     }
+    public void RangeAttack()
+    {
+        if (target != null)
+        {
+            atk.transform.position = target.position;
+            shoot.Play();
+            atk.Play();
+        }
+    }
 
 
 
-   
+
 }

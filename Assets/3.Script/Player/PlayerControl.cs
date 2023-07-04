@@ -58,46 +58,60 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     {
         if (!isDead)
         {
-
-            if (Input.GetMouseButton(1))
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit)  )
-                {
-                    
-                    if (hit.collider.gameObject.layer==7)
-                    {
-                        target = hit.transform;
-                    }
-                    else
-                    {
-                        SetDestination(hit.point);
-                    }
-
-                }
-            }
+            PlayerMove();
             LookMoveDirection();
-            //if (target != null&& Vector3.Distance(target.position, transform.position) <= AtkRange)
-            //{
-            //    Attack();
-            //}
-            if (target != null && canAtk)
+            AttackCheck();
+            MoveCheck();
+            Stop();
+            LookForward();
+        }
+    }
+    private void AttackCheck()
+    {
+        if (target != null && canAtk && Vector3.Distance(target.position, transform.position) <= AtkRange)
+        {
+            Attack();
+        }
+    }
+    private void MoveCheck()
+    {
+        if (agent.velocity.magnitude > 0.0f)  // 변경
+        {
+            isMove = true;
+            animator.SetBool("isMove", isMove);
+        }
+    }
+    private void LookForward()
+    {
+        if (target != null)
+        {
+            var dir = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z) - transform.position;
+            animator.transform.forward = dir;
+        }
+        else
+        {
+            // 앞쪽 방향을 바라보도록 설정
+            LookMoveDirection();
+        }
+    }
+    private void PlayerMove()
+    {
+        if (Input.GetMouseButton(1))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit))
             {
-                Attack();
-            }
-            if (agent.velocity.magnitude>0.0f)  // 변경
-            {
-                isMove = true;
-                animator.SetBool("isMove", isMove);
-            }
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                agent.isStopped = true;
-                isMove = false;
-                animator.SetBool("isMove", isMove);
-                playerAtkBox.enabled = true;
-            }
 
+                if (hit.collider.gameObject.layer == 7)
+                {
+                    target = hit.transform;
+                }
+                else
+                {
+                    SetDestination(hit.point);
+                }
+
+            }
         }
     }
 
@@ -112,7 +126,6 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         isMove = true;
         animator.SetBool("isMove", true);
     }
-
     // private void Move()
     private void LookMoveDirection()  // 변경
     {
@@ -133,7 +146,6 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
             animator.transform.forward = dir;
         }
     }
-
     public void TakeDamage(int damage)
     {
         int takeDamage;
@@ -147,7 +159,6 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         }
 
         currentHp -= takeDamage;
-        Debug.Log(currentHp);
         if (currentHp <= 0)
         {
             currentHp = 0;
@@ -157,8 +168,9 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     private void Attack()
     {
         canAtk = false;
-        var dir = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z) - transform.position;  // 변경
-        animator.transform.forward = dir;
+        //var dir = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z) - transform.position;  // 변경
+        //animator.transform.forward = dir;
+        transform.LookAt(target);
         animator.SetBool("isMove", false);
         animator.SetBool("isAttack", true);
         gunFireParticle.Play();
@@ -167,6 +179,16 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
 
     }
 
+    private void Stop()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            agent.isStopped = true;
+            isMove = false;
+            animator.SetBool("isMove", isMove);
+            playerAtkBox.enabled = true;
+        }
+    }
     public void EndAttack()
     {
         gunFireParticle.Stop();
