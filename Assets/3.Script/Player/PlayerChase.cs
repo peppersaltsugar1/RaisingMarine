@@ -6,6 +6,7 @@ public class PlayerChase : MonoBehaviour
 {
     PlayerControl player;
     CapsuleCollider chase;
+
     private void Start()
     {
         player = GetComponentInParent<PlayerControl>();
@@ -14,26 +15,40 @@ public class PlayerChase : MonoBehaviour
 
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out MonsterControl monster))
+        if (other.CompareTag("Enemy"))
         {
-            if (monster.isdead)
-            {
-                player.target = null;
-            }
-            else if (other.CompareTag("Enemy") && player.target == null)
-            {
-                player.target = other.transform;
-            }
+            other.TryGetComponent(out MonsterControl monster);
+            player.targetList.Add(monster);
         }
     }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.TryGetComponent(out MonsterControl monster))
+    //    {
+    //        if (monster.isdead)
+    //        {
+    //            player.target = null;
+    //        }
+    //        else if (other.CompareTag("Enemy") && player.target == null)
+    //        {
+    //            player.target = other.transform;
+    //        }
+    //    }
+    //}
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Enemy") && player.target != null)
+        //if (other.CompareTag("Enemy") && player.target != null)
+        //{
+        //    player.target = null;
+        //}
+        if (other.CompareTag("Enemy"))
         {
-            player.target = null;
+            other.TryGetComponent(out MonsterControl monster);
+            player.targetList.Remove(monster);
         }
+
     }
 }

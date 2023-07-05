@@ -22,6 +22,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     [Header("플레이어 스탯")]
     [SerializeField] public int playerNum;
     [SerializeField] public int MaxHp;
+    [SerializeField] public int currentHp;
     [SerializeField] public int Atk;
     [SerializeField] public int Def;
     [SerializeField] public float AtkSpeed;
@@ -32,8 +33,8 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     [SerializeField] private ParticleSystem atkParticle;
     [SerializeField] private ParticleSystem gunFireParticle;
 
-    public int currentHp;
     public bool isDead;
+    public List<MonsterControl> targetList = new List<MonsterControl>();
     public Transform target;
     [Header("플레이어 공격관련")]
     [SerializeField]private CapsuleCollider playerAtkBox;
@@ -60,12 +61,13 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         {
             PlayerMove();
             LookMoveDirection();
+            SetTarget();
             AttackCheck();
             MoveCheck();
             Stop();
             LookForward();
         }
-    }
+    }   
     private void AttackCheck()
     {
         if (target != null && canAtk && Vector3.Distance(target.position, transform.position) <= AtkRange)
@@ -118,7 +120,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     private void SetDestination(Vector3 dest)
     {
         agent.isStopped = false;
-        target = null;
+        TargetReset();
         EndAttack();
         playerAtkBox.enabled = false;
         agent.SetDestination(dest);
@@ -220,6 +222,57 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         isDead = true;
         yield return new WaitForSeconds(5f);
         Destroy(gameObject);
+    }
+
+    private void SetTarget()
+    {
+        if (targetList.Count > 0)
+        {
+            int i = 0;
+            while (i < targetList.Count)
+            {
+                if (targetList[i].isdead)
+                {
+                    targetList.RemoveAt(i);
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
+            if (targetList.Count > 0)
+            {
+                target = targetList[0].transform;
+            }
+            else
+            {
+                target = null;
+            }
+        }
+        else
+        {
+            target = null;
+        }
+        //if (targetList.Count > 0)
+        //{
+        //    for(int i = 0; i < targetList.Count; i++)
+        //    {
+        //        if (targetList[i].isdead)
+        //        {
+        //            targetList.RemoveAt(i);
+        //            i -= 1;
+        //        }
+        //    }
+        //    target = targetList[0].transform;
+        //}
+    }
+    private void TargetReset()
+    {
+        if (targetList.Count > 0)
+        {
+            targetList.Clear();
+        }
     }
 }
 

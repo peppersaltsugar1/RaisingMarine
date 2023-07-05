@@ -97,6 +97,8 @@ public class Monster : MonoBehaviour, ITakeDamage
     }
     IEnumerator Die_co()
     {
+        CapsuleCollider hitBox = GetComponent<CapsuleCollider>();
+        hitBox.enabled = false;
         isdead = true;
         enemyAnimator.SetTrigger("isDie");
         agent.isStopped = true;

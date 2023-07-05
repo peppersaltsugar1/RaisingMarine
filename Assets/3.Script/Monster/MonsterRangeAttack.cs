@@ -4,23 +4,18 @@ using UnityEngine;
 
 public class MonsterRangeAttack : MonoBehaviour
 {
-    MonsterControl monster;
-    [SerializeField]ParticleSystem atk;
-    [SerializeField]ParticleSystem shoot;
 
-    private void Awake()
+    private void OnParticleCollision(GameObject other)
     {
-        monster = GetComponentInParent<MonsterControl>();
-    }
-
-
-    public void RangeAttack()
-    {
-        if (monster.target != null)
+        MonsterControl monster = GetComponentInParent<MonsterControl>();
+        if (other.CompareTag("Player"))
         {
-            atk.transform.position = monster.target.position;
-            shoot.Play();
-            atk.Play();
+            if (!monster.isdead && Time.time >= monster.lastAttackTimebet + monster.timebetAttack)
+            {
+                monster.lastAttackTimebet = Time.time;
+                other.TryGetComponent(out PlayerControl player);
+                player.TakeDamage(monster.Atk);
+            }
         }
     }
 }

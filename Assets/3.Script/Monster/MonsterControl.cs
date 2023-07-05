@@ -52,6 +52,7 @@ public class MonsterControl : Monster
         MoveSpeed = monsterdata.MoveSpeed;
         agent.speed = MoveSpeed;
         score = monsterdata.score;
+        agent.stoppingDistance = AtkRange;
     }
     private void Update()
     {
@@ -59,6 +60,7 @@ public class MonsterControl : Monster
         {
             if (Vector3.Distance(target.position, transform.position) <= AtkRange)
             {
+                transform.LookAt(target);
                 Attack();
             }
             else
