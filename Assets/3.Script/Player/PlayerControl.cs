@@ -150,6 +150,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     }
     public void TakeDamage(int damage)
     {
+        Debug.Log("ÃÄ¸ÂÀ½");
         int takeDamage;
         if (damage - Def <= 0)
         {
