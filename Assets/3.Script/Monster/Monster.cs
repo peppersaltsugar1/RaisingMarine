@@ -28,6 +28,8 @@ public class Monster : MonoBehaviour, ITakeDamage
     public Animator enemyAnimator; // 애니메이터 컴포넌트
     public AudioSource enemyAudioPlayer; // 오디오 소스 컴포넌트
 
+    [SerializeField]ParticleSystem explosion; //폭발 파티클
+
 
     private void Awake()
     {
@@ -108,5 +110,19 @@ public class Monster : MonoBehaviour, ITakeDamage
 
     public void TakeDamage(int damage)
     {
+    }
+
+    public void Explosion()
+    {
+        StartCoroutine(Explosion_co());
+    }
+
+    IEnumerator Explosion_co()
+    {
+        explosion.Play();
+        agent.isStopped = true;
+        
+        yield return new WaitForSeconds(0.5f);
+        transform.gameObject.SetActive(false);
     }
 }
