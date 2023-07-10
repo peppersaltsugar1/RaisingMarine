@@ -34,7 +34,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     [SerializeField] private ParticleSystem gunFireParticle;
 
     public bool isDead;
-    public List<MonsterControl> targetList = new List<MonsterControl>();
+    public List<Monster> targetList = new List<Monster>();
     public Transform target;
     [Header("플레이어 공격관련")]
     [SerializeField]private CapsuleCollider playerAtkBox;

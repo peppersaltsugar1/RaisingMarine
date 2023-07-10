@@ -13,7 +13,7 @@ public class PlayerAttack : MonoBehaviour
             if (!player.isDead && Time.time >= player.lastAttackTimebet + player.timebetAttack)
             {
                 player.lastAttackTimebet = Time.time;
-                other.TryGetComponent(out MonsterControl monster);
+                other.TryGetComponent(out Monster monster);
                 monster.TakeDamage(player.Atk,player.playerNum);
             }
         }

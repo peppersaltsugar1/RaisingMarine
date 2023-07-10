@@ -19,7 +19,7 @@ public class PlayerChase : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            other.TryGetComponent(out MonsterControl monster);
+            other.TryGetComponent(out Monster monster);
             player.targetList.Add(monster);
         }
     }
@@ -46,7 +46,7 @@ public class PlayerChase : MonoBehaviour
         //}
         if (other.CompareTag("Enemy"))
         {
-            other.TryGetComponent(out MonsterControl monster);
+            other.TryGetComponent(out Monster monster);
             player.targetList.Remove(monster);
         }
 
