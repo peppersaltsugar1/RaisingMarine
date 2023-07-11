@@ -108,7 +108,7 @@ public class Monster : MonoBehaviour, ITakeDamage
         transform.gameObject.SetActive(false);
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
     }
 

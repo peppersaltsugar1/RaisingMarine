@@ -163,4 +163,8 @@ public class MidBossControl : Monster
     {
         SetState();
     }
+    public void Breath()
+    {
+        useParticle[1].Play();
+    }
 }

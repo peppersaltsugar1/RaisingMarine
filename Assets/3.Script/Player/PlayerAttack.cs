@@ -10,6 +10,15 @@ public class PlayerAttack : MonoBehaviour
        PlayerControl player = GetComponentInParent<PlayerControl>();
         if(other.CompareTag("Enemy"))
         {
+            if(other.TryGetComponent(out MonsterSpawner spawner))
+            {
+                if (!player.isDead && Time.time >= player.lastAttackTimebet + player.timebetAttack)
+                {
+                    player.lastAttackTimebet = Time.time;
+                    spawner.TakeDamage(player.Atk);
+                }
+                    return;
+            }
             if (!player.isDead && Time.time >= player.lastAttackTimebet + player.timebetAttack)
             {
                 player.lastAttackTimebet = Time.time;

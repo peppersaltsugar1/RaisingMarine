@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterRangeAttack : MonoBehaviour
+public class MidBossBreath : MonoBehaviour
 {
 
     private void OnParticleCollision(GameObject other)
     {
-        MonsterControl monster = GetComponentInParent<MonsterControl>();
+        MidBossControl monster = GetComponentInParent<MidBossControl>();
         if (other.CompareTag("Player"))
         {
             if (!monster.isdead && Time.time >= monster.lastAttackTimebet + monster.timebetAttack)

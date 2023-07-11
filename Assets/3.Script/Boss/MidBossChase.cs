@@ -31,5 +31,6 @@ public class MidBossChase : MonoBehaviour
                 monster.target = other.transform;
             }
         }
+
     }
 }
