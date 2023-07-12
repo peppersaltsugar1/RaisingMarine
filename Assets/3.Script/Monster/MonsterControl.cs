@@ -38,8 +38,15 @@ public class MonsterControl : Monster
 
     private void Start()
     {
+        
         SetData(monsterdata);
         currentHp = MaxHp;
+    }
+    private void OnEnable()
+    {
+        hitBox.enabled = true;
+        currentHp = MaxHp;
+        isdead = false;
     }
 
     private void SetData(MonsterData monsterdata)

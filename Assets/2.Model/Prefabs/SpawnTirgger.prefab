@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3402098023948922102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3402098023948922056}
+  - component: {fileID: 3402098023948922057}
+  - component: {fileID: 3402098023948922059}
+  m_Layer: 0
+  m_Name: SpawnTirgger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3402098023948922056
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3402098023948922102}
+  m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
+  m_LocalPosition: {x: -33.5, y: 0, z: 87.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
+--- !u!114 &3402098023948922057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3402098023948922102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10b3fe5c8b898d244a81ef1cf47e887a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnMonsterList: []
+  monsterList:
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 1824848246468367282, guid: 90ec1f04dd8a9fe4aa931a954633deeb, type: 3}
+  - {fileID: 8417455653865142922, guid: 88ee648db6e7188499709d6e98b7ca3a, type: 3}
+  - {fileID: 8417455653865142922, guid: 88ee648db6e7188499709d6e98b7ca3a, type: 3}
+  spawnPoint: {fileID: 0}
+--- !u!65 &3402098023948922059
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3402098023948922102}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 1, z: 30}
+  m_Center: {x: 0, y: 0, z: 0}

@@ -10,7 +10,7 @@ public class PlayerAttack : MonoBehaviour
        PlayerControl player = GetComponentInParent<PlayerControl>();
         if(other.CompareTag("Enemy"))
         {
-            if(other.TryGetComponent(out MonsterSpawner spawner))
+            if (other.TryGetComponent(out MonsterSpawner spawner))
             {
                 if (!player.isDead && Time.time >= player.lastAttackTimebet + player.timebetAttack)
                 {
@@ -18,6 +18,15 @@ public class PlayerAttack : MonoBehaviour
                     spawner.TakeDamage(player.Atk);
                 }
                     return;
+            }
+            if (other.TryGetComponent(out MonsterObject monsterObject))
+            {
+                if (!player.isDead && Time.time >= player.lastAttackTimebet + player.timebetAttack)
+                {
+                    player.lastAttackTimebet = Time.time;
+                    monsterObject.TakeDamage(player.Atk);
+                }
+                return;
             }
             if (!player.isDead && Time.time >= player.lastAttackTimebet + player.timebetAttack)
             {

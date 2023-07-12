@@ -19,8 +19,13 @@ public class PlayerChase : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            other.TryGetComponent(out Monster monster);
-            player.targetList.Add(monster);
+            if (other.TryGetComponent(out Monster monster))
+            {
+                if (!monster.isdead)
+                {
+                    player.targetList.Add(monster);
+                }
+            }
         }
     }
     //private void OnTriggerStay(Collider other)

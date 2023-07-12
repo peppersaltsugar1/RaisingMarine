@@ -7,11 +7,12 @@ public class MonsterSpawner : Monster
     [Header("스폰 몬스터 목록")]
     [SerializeField]MonsterControl[] spawnMonster;
     [SerializeField]MonsterControl monster;
-    [SerializeField]MonsterControl boss;
+    [SerializeField]MonsterControl[] boss;
     [SerializeField]private int spawnMonsterNum;
     [Header("스포너 스텟")]
     [SerializeField] private int def;
     [SerializeField] GameObject spawnPoint;
+    [SerializeField] private int spawnerNum;
 
     private void Awake()
     {
@@ -22,16 +23,20 @@ public class MonsterSpawner : Monster
             spawnMonster[i].gameObject.SetActive(false);
         }
     }
-    private void OnEnable()
-    {
-        StartCoroutine(Spawn_co());
-    }
 
     private void OnDisable()
     {
-        Instantiate(boss, transform.position, Quaternion.identity);
+        for(int i = 0; i < boss.Length; i++)
+        {
+        Instantiate(boss[i], transform.position, Quaternion.identity);
+        }
+        GameManager.instance.spawnerList[spawnerNum].StartSpawn();
     }
 
+    public void StartSpawn()
+    {
+        StartCoroutine(Spawn_co());
+    }
 
 
     IEnumerator Spawn_co()
@@ -56,7 +61,7 @@ public class MonsterSpawner : Monster
                     i = 0;
                 }
             }
-
+            yield return null;
         }
     }
 
@@ -70,7 +75,9 @@ public class MonsterSpawner : Monster
         currentHp -= dmg;
         if (currentHp <= 0)
         {
+            currentHp = 0;
             transform.gameObject.SetActive(false);
+            isdead = true;
             PointUp();
         }
     }

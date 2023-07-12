@@ -19,6 +19,8 @@ public class Monster : MonoBehaviour, ITakeDamage
 
     public bool isdead;
 
+    protected CapsuleCollider hitBox;
+
     [SerializeField] public float timebetAttack = 0.5f;
     public float lastAttackTimebet;
 
@@ -33,6 +35,7 @@ public class Monster : MonoBehaviour, ITakeDamage
 
     private void Awake()
     {
+        hitBox = GetComponent<CapsuleCollider>();
         //onDeath.AddListener(PointUp);
         agent = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
@@ -99,7 +102,6 @@ public class Monster : MonoBehaviour, ITakeDamage
     }
     IEnumerator Die_co()
     {
-        CapsuleCollider hitBox = GetComponent<CapsuleCollider>();
         hitBox.enabled = false;
         isdead = true;
         enemyAnimator.SetTrigger("isDie");
