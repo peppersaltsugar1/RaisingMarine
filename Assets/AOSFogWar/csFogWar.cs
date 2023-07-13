@@ -377,10 +377,11 @@ namespace FischlWorks_FogWar
                 levelMidPoint.position.y + fogPlaneHeight,
                 levelMidPoint.position.z);
 
+
             fogPlane.transform.localScale = new Vector3(
-                (levelDimensionX * unitScale) / 10.0f,
-                1,
-                (levelDimensionY * unitScale) / 10.0f);
+              (levelDimensionX * unitScale) / 10.0f,
+              1,
+              (levelDimensionY * unitScale) / 10.0f);
 
             fogPlaneTextureLerpTarget = new Texture2D(levelDimensionX, levelDimensionY);
             fogPlaneTextureLerpBuffer = new Texture2D(levelDimensionX, levelDimensionY);

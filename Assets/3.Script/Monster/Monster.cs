@@ -85,6 +85,8 @@ public class Monster : MonoBehaviour, ITakeDamage
     public void PointUp(int playerNum,int score)
     {
         GameManager.instance.score[playerNum - 1] += score;
+        Debug.Log(GameManager.instance.score[playerNum - 1]);
+        UIManager.instance.ScoreSet();
     }
 
     public void EndAttack()

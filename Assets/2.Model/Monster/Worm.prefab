@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6307728503488991599}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigTail1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 533865600206841131}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2859873705990141539}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigPelvis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5985683543774557045}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigNeck1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5424767484347783195}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigTail4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7930659497338933260}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigSpine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,6 +264,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   enemyAnimator: {fileID: 0}
   enemyAudioPlayer: {fileID: 0}
+  explosion: {fileID: 0}
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 0
@@ -320,7 +321,7 @@ GameObject:
   - component: {fileID: 4111090154113666222}
   - component: {fileID: 4111090154113666220}
   - component: {fileID: 4111090154113666221}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Chase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +376,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8335507719592872140}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigSpine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +407,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5123965552228788072}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigRibcage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7646934408424335565}
   - component: {fileID: 1997532634625405471}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Worm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +533,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9004328685269450332}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigMouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +563,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 295614240000823032}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigNeck2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -593,7 +594,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7349186763453678658}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigTail2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -624,7 +625,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8886936254502988650}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigSpine3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -655,7 +656,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8340368041136782272}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -686,7 +687,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7194371808097842422}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigTail3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -715,9 +716,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4105446695530294016}
     m_Modifications:
+    - target: {fileID: 1454293328961910, guid: 4171bb92c5c591848b14be1db6f3efe2, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1575721338728490, guid: 4171bb92c5c591848b14be1db6f3efe2, type: 3}
       propertyPath: m_Name
       value: FX_Confetti_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575721338728490, guid: 4171bb92c5c591848b14be1db6f3efe2, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4931245599864932, guid: 4171bb92c5c591848b14be1db6f3efe2, type: 3}
       propertyPath: m_RootOrder
@@ -931,6 +940,10 @@ PrefabInstance:
     - target: {fileID: 1026642433091512, guid: ed67c2cb8e3a7fb418c6fbb1b001dce2, type: 3}
       propertyPath: m_Name
       value: FX_BloodSplat_Small_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1026642433091512, guid: ed67c2cb8e3a7fb418c6fbb1b001dce2, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4863669544042206, guid: ed67c2cb8e3a7fb418c6fbb1b001dce2, type: 3}
       propertyPath: m_RootOrder

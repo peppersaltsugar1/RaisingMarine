@@ -59,7 +59,24 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     {
         if (!isDead)
         {
-            PlayerMove();
+            if (Input.GetMouseButton(1))
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit))
+                {
+                    if (hit.collider.gameObject.CompareTag("Enemy"))
+                    {
+                        target = hit.transform;
+                        OnTarget(target);
+                    }
+                    else
+                    {
+                        SetDestination(hit.point);
+                    }
+
+                }
+            }
+            //PlayerMove();
             LookMoveDirection();
             SetTarget();
             AttackCheck();
@@ -74,6 +91,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         {
             Attack();
         }
+       
     }
     private void MoveCheck()
     {
@@ -104,13 +122,15 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
             if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit))
             {
 
+                Debug.Log(hit.collider.gameObject.tag);
+                
                 if (hit.collider.gameObject.layer == 7)
                 {
                     target = hit.transform;
                 }
                 else
                 {
-                    SetDestination(hit.point);
+                    SetDestination(hit.point);  
                 }
 
             }
@@ -125,6 +145,16 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         playerAtkBox.enabled = false;
         agent.SetDestination(dest);
         destination = dest;
+        isMove = true;
+        animator.SetBool("isMove", true);
+    }
+    private void OnTarget(Transform target)
+    {
+        agent.isStopped = false;
+        EndAttack();
+        playerAtkBox.enabled = false;
+        agent.SetDestination(target.transform.position);
+        destination = target.transform.position;
         isMove = true;
         animator.SetBool("isMove", true);
     }
@@ -171,6 +201,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     private void Attack()
     {
         canAtk = false;
+        agent.isStopped = true;
         //var dir = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z) - transform.position;  // º¯°æ
         //animator.transform.forward = dir;
         transform.LookAt(target);
@@ -227,34 +258,52 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
 
     private void SetTarget()
     {
-        if (targetList.Count > 0)
+        if (target != null)
         {
-            int i = 0;
-            while (i < targetList.Count)
-            {
-                if (targetList[i].isdead)
-                {
-                    targetList.RemoveAt(i);
-                }
-                else
-                {
-                    i++;
-                }
-            }
-
-            if (targetList.Count > 0)
-            {
-                target = targetList[0].transform;
-            }
-            else
+            target.TryGetComponent(out Monster monster);
+            if (monster.isdead)
             {
                 target = null;
             }
         }
         else
         {
-            target = null;
+
+            if (targetList.Count > 0)
+            {
+
+                int i = 0;
+                while (i < targetList.Count)
+                {
+                    if (targetList[i].isdead)
+                    {
+                        targetList.RemoveAt(i);
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+
+                if (targetList.Count > 0)
+                {
+                    target = targetList[0].transform;
+                }
+                else
+                {
+                    target = null;
+                }
+            }
+            else if (target != null && targetList.Count <= 0)
+            {
+
+                target = null;
+            }
         }
+        //else
+        //{
+        //    target = null;
+        //}
         //if (targetList.Count > 0)
         //{
         //    for(int i = 0; i < targetList.Count; i++)
@@ -270,6 +319,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     }
     private void TargetReset()
     {
+        target = null;
         if (targetList.Count > 0)
         {
             targetList.Clear();
