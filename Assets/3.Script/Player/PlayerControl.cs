@@ -28,7 +28,14 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     [SerializeField] public float AtkSpeed;
     [SerializeField] public int AtkRange;
     [SerializeField] public int MoveSpeed;
+    [Header("플레이어 업그레이드 수치")]
+    [SerializeField] public int atkUp;
+    [SerializeField] public int defUp;
 
+
+    [Header("플레이어 자원")]
+    [SerializeField] public int money;
+    [SerializeField] public int skillPoint;
     [Header("플레이어 파티클")]
     [SerializeField] private ParticleSystem atkParticle;
     [SerializeField] private ParticleSystem gunFireParticle;
@@ -73,16 +80,16 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
                     {
                         SetDestination(hit.point);
                     }
-
                 }
+                LookMoveDirection();
             }
             //PlayerMove();
-            LookMoveDirection();
+            //LookMoveDirection();
             SetTarget();
             AttackCheck();
             MoveCheck();
             Stop();
-            LookForward();
+            //LookForward();
         }
     }   
     private void AttackCheck()
@@ -99,6 +106,12 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         {
             isMove = true;
             animator.SetBool("isMove", isMove);
+        }
+        if (agent.velocity.magnitude == 0.0f)  // 변경
+        {
+            isMove = false;
+            animator.SetBool("isMove", isMove);
+            playerAtkBox.enabled = true;
         }
     }
     private void LookForward()
@@ -204,8 +217,9 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         agent.isStopped = true;
         //var dir = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z) - transform.position;  // 변경
         //animator.transform.forward = dir;
-        transform.LookAt(target);
         animator.SetBool("isMove", false);
+        playerAtkBox.enabled = true;
+        transform.LookAt(target);
         animator.SetBool("isAttack", true);
         gunFireParticle.Play();
         atkParticle.transform.position = target.transform.position;

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] Text[] scoreText;
+    [SerializeField] Text[] moneyText;
 
     public static UIManager instance = null;
     private void Awake()
@@ -29,5 +30,14 @@ public class UIManager : MonoBehaviour
         {
             scoreText[i].text = $"Score : {GameManager.instance.score[i]}";
         }
+    }
+    
+    public void MoneySet(int money,int index)
+    {
+        moneyText[index].text = money.ToString();
+    }
+    public void SkllPointSet()
+    {
+
     }
 }
