@@ -31,6 +31,17 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     [Header("플레이어 업그레이드 수치")]
     [SerializeField] public int atkUp;
     [SerializeField] public int defUp;
+    [SerializeField] public int hpUp;
+    [SerializeField] public int atkSpeedUp;
+    [Header("업그레이드 계수")]
+    [Header("공격력계수")]
+    [SerializeField] private int atkPower;
+    [Header("방어력계수")]
+    [SerializeField] private int defkPower;
+    [Header("공격속도계수계수")]
+    [SerializeField] private float atkSpeedPower;
+    [Header("체력계수")]
+    [SerializeField] private int hpPower;
 
 
     [Header("플레이어 자원")]

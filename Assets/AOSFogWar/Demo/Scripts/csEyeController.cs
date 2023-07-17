@@ -38,65 +38,65 @@ namespace FischlWorks_FogWar
 
         private void Update()
         {
-            if (Input.GetKey(KeyCode.W))
-            {
-                if (currentSpeed.y < speedYLimit)
-                {
-                    currentSpeed.y += acceleration * Time.deltaTime;
-                }
-            }
-            else if (Input.GetKey(KeyCode.S))
-            {
-                if (currentSpeed.y > -speedYLimit)
-                {
-                    currentSpeed.y -= acceleration * Time.deltaTime;
-                }
-            }
-            else
-            {
-                if (currentSpeed.y > acceleration * Time.deltaTime)
-                {
-                    currentSpeed.y -= acceleration * Time.deltaTime;
-                }
-                else if (currentSpeed.y < -acceleration * Time.deltaTime)
-                {
-                    currentSpeed.y += acceleration * Time.deltaTime;
-                }
-                else
-                {
-                    currentSpeed.y = 0;
-                }
-            }
+            //if (Input.GetKey(KeyCode.W))
+            //{
+            //    if (currentSpeed.y < speedYLimit)
+            //    {
+            //        currentSpeed.y += acceleration * Time.deltaTime;
+            //    }
+            //}
+            //else if (Input.GetKey(KeyCode.S))
+            //{
+            //    if (currentSpeed.y > -speedYLimit)
+            //    {
+            //        currentSpeed.y -= acceleration * Time.deltaTime;
+            //    }
+            //}
+            //else
+            //{
+            //    if (currentSpeed.y > acceleration * Time.deltaTime)
+            //    {
+            //        currentSpeed.y -= acceleration * Time.deltaTime;
+            //    }
+            //    else if (currentSpeed.y < -acceleration * Time.deltaTime)
+            //    {
+            //        currentSpeed.y += acceleration * Time.deltaTime;
+            //    }
+            //    else
+            //    {
+            //        currentSpeed.y = 0;
+            //    }
+            //}
 
-            if (Input.GetKey(KeyCode.A))
-            {
-                if (currentSpeed.x > -speedXLimit)
-                {
-                    currentSpeed.x -= acceleration * Time.deltaTime;
-                }
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                if (currentSpeed.x < speedXLimit)
-                {
-                    currentSpeed.x += acceleration * Time.deltaTime;
-                }
-            }
-            else
-            {
-                if (currentSpeed.x > acceleration * Time.deltaTime)
-                {
-                    currentSpeed.x -= acceleration * Time.deltaTime;
-                }
-                else if (currentSpeed.x < -acceleration * Time.deltaTime)
-                {
-                    currentSpeed.x += acceleration * Time.deltaTime;
-                }
-                else
-                {
-                    currentSpeed.x = 0;
-                }
-            }
+            //if (Input.GetKey(KeyCode.A))
+            //{
+            //    if (currentSpeed.x > -speedXLimit)
+            //    {
+            //        currentSpeed.x -= acceleration * Time.deltaTime;
+            //    }
+            //}
+            //else if (Input.GetKey(KeyCode.D))
+            //{
+            //    if (currentSpeed.x < speedXLimit)
+            //    {
+            //        currentSpeed.x += acceleration * Time.deltaTime;
+            //    }
+            //}
+            //else
+            //{
+            //    if (currentSpeed.x > acceleration * Time.deltaTime)
+            //    {
+            //        currentSpeed.x -= acceleration * Time.deltaTime;
+            //    }
+            //    else if (currentSpeed.x < -acceleration * Time.deltaTime)
+            //    {
+            //        currentSpeed.x += acceleration * Time.deltaTime;
+            //    }
+            //    else
+            //    {
+            //        currentSpeed.x = 0;
+            //    }
+            //}
 
             transform.Translate(new Vector3(currentSpeed.x, 0, currentSpeed.y) * Time.deltaTime);
         }
