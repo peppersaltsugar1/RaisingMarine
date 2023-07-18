@@ -28,7 +28,7 @@ public class Upgrade : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            UIManager.instance.ESC();
+            UIManager.instance.PlayerUISet();
         }
     }
 
@@ -45,7 +45,9 @@ public class Upgrade : MonoBehaviour
             player.money -= money;
             player.atkUp++;
             UIManager.instance.MoneySet(player.money, player.playerNum-1);
+            UIManager.instance.SetUpgradePower(player.atkUp,player.hpUp);
         }
+        
     }
     public void DefUpgrade()
     {
@@ -60,6 +62,8 @@ public class Upgrade : MonoBehaviour
             player.money -= money;
             player.defUp++;
             UIManager.instance.MoneySet(player.money, player.playerNum - 1);
+            UIManager.instance.SetUpgradePower(player.atkUp, player.hpUp);
+
 
         }
     }
@@ -75,6 +79,8 @@ public class Upgrade : MonoBehaviour
             player.money -= money;
             player.atkSpeedUp++;
             UIManager.instance.MoneySet(player.money, player.playerNum - 1);
+            UIManager.instance.SetUpgradePower(player.atkUp, player.hpUp);
+
 
         }
     }
@@ -90,6 +96,8 @@ public class Upgrade : MonoBehaviour
             player.money -= money;
             player.hpUp++;
             UIManager.instance.MoneySet(player.money, player.playerNum - 1);
+            UIManager.instance.SetUpgradePower(player.atkUp, player.hpUp);
+
 
         }
     }

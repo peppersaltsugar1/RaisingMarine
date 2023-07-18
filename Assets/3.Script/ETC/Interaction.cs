@@ -28,6 +28,6 @@ public class Interaction : MonoBehaviour
     {
         interaction_ob.SetActive(false);
         upgrade.SetActive(false);
-        UIManager.instance.ESC();
+        UIManager.instance.PlayerUISet();
     }
 }

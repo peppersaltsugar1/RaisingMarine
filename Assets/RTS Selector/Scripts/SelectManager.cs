@@ -52,7 +52,6 @@ public class SelectManager : MonoBehaviour
         //The input for triggering selecting. This can be changed
         if (Input.GetMouseButtonDown(0)) {
             ReSelect();
-
             //Sets up the screen box
             SelectingStart = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
             SelectingBoxRect.anchoredPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
@@ -142,7 +141,6 @@ public class SelectManager : MonoBehaviour
             if (SelectingRect.Contains(screenPos)) {
                 if (!selectedArmy.Contains(soldier))
                     selectedArmy.Add(soldier);
-
                 soldier.TurnOnSelector();
             } else if (!SelectingRect.Contains(screenPos)) {
                 soldier.TurnOffSelector();
@@ -157,7 +155,6 @@ public class SelectManager : MonoBehaviour
     void CheckIfUnderMouse() {
         RaycastHit hit;
         Ray ray = selectCam.ScreenPointToRay(Input.mousePosition);
-
         //Raycast from mouse and select character if its hit!
         if (Physics.Raycast(ray, out hit, 100f)) {
             if (hit.transform != null) {

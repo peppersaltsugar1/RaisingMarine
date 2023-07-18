@@ -13,10 +13,24 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject[] upgradeUI;
     [Header("슬롯 UI")]
     [SerializeField] GameObject[] slots;
+    [Header("인포UI")]
+    [SerializeField] GameObject info;
     [Header("ESC버튼")]
     [SerializeField] GameObject escBtn;
     [Header("업그레이드 수치")]
-    [SerializeField] GameObject upgrade;
+    [SerializeField] Text atkUpgrade;
+    [SerializeField] Text defUpgrade;
+    [Header("플레이어 HP")]
+    [SerializeField] Text playerHp;
+    [SerializeField] GameObject playerPic;
+
+    [Header("플레이어 UI목록")]
+    [SerializeField] GameObject[] playerUIList;
+    [Header("스킬스프라이트")]
+    [SerializeField] Sprite[] skillList;
+    [Header("쿨타임UI")]
+    [SerializeField] Image[] coolTimeImage;
+
 
     public static UIManager instance = null;
     private void Awake()
@@ -41,12 +55,12 @@ public class UIManager : MonoBehaviour
             scoreText[i].text = $"Score : {GameManager.instance.score[i]}";
         }
     }
-    
-    public void MoneySet(int money,int index)
+
+    public void MoneySet(int money, int index)
     {
         moneyText[index].text = money.ToString();
     }
-    public void SkllPointSet()
+    public void SkillPointSet()
     {
 
     }
@@ -54,7 +68,7 @@ public class UIManager : MonoBehaviour
     public void UseUpgrade()
     {
         ESC();
-        for(int i = 0; i < upgradeUI.Length; i++)
+        for (int i = 0; i < upgradeUI.Length; i++)
         {
             upgradeUI[i].gameObject.SetActive(true);
         }
@@ -78,4 +92,85 @@ public class UIManager : MonoBehaviour
             }
         }
     }
+    public void HpSet(int MaxHp, int currentHp)
+    {
+        playerHp.text = currentHp.ToString() + "/" + MaxHp.ToString();
+    }
+
+    public void PlayerUISet()
+    {
+        ESC();
+        SetInfo();
+        for (int i = 0; i < playerUIList.Length; i++)
+        {
+            playerUIList[i].SetActive(true);
+        }
+    }
+    public void SetInfo()
+    {
+        info.SetActive(false);
+    }
+
+    public void SetUpgradePower(int atk, int def)
+    {
+        atkUpgrade.text = atk.ToString();
+        defUpgrade.text = def.ToString();
+    }
+
+    public void BuyHeal()
+    {
+        Image healImage = playerUIList[3].GetComponent<Image>();
+        healImage.sprite = skillList[0];
+
+    }
+    public void BuyUlt()
+    {
+        Image healImage = playerUIList[4].GetComponent<Image>();
+        healImage.sprite = skillList[1];
+    }
+    public void BuyReturn()
+    {
+        Image healImage = playerUIList[5].GetComponent<Image>();
+        healImage.sprite = skillList[2];
+    }
+    public void BuySteam()
+    {
+        Image healImage = playerUIList[6].GetComponent<Image>();
+        healImage.sprite = skillList[3];    
+    }
+    public void BuyTeleport()
+    {
+        Image healImage = playerUIList[7].GetComponent<Image>();
+        healImage.sprite = skillList[4];
+    }
+    public void BuySkill()
+    {
+        Image healImage = playerUIList[8].GetComponent<Image>();
+        healImage.sprite = skillList[5];
+    }
+
+    public void StartCool(float cooltime, int index)
+    {
+        StartCoroutine(CoolTimeRoutine(cooltime,index));
+    }
+    IEnumerator CoolTimeRoutine(float cooltime,int index)
+    {
+        coolTimeImage[index].gameObject.SetActive(true);
+        var time = cooltime;
+        while (true)
+        {
+            time -= Time.deltaTime;
+            var per = time / cooltime;
+            coolTimeImage[index].fillAmount = per;
+            yield return null;
+            if (time <= 0)
+            {
+                coolTimeImage[index].gameObject.SetActive(false);
+                break;
+            }
+        }
+
+    }
+
+
 }

@@ -43,6 +43,7 @@ public class Healling : MonoBehaviour
                 for(int i = 0; i < playerList.Count; i++)
                 {
                     playerList[i].currentHp = playerList[i].MaxHp;
+                    UIManager.instance.HpSet(playerList[i].MaxHp, playerList[i].currentHp);
                 }
             }
             yield return new WaitForSeconds(3f);

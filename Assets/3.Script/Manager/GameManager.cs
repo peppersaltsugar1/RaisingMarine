@@ -8,6 +8,14 @@ public class GameManager : MonoBehaviour
     public int playerNum;
     public int[] score;
     [SerializeField] public MonsterSpawner[] spawnerList;
+
+    [Header("스킬가격")]
+    [SerializeField]public int healValue;
+    [SerializeField]public int ultValue;
+    [SerializeField]public int returnValue;
+    [SerializeField]public int steamValue;
+    [SerializeField]public int TelValue;
+    [SerializeField]public int skillAtkValue;
     private void Awake()
     {
         playerNum = 1; //플레이어 입장수의 따라서 바꿔줘야함

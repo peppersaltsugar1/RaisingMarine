@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class PlayerControl : MonoBehaviour,ITakeDamage
 {
@@ -27,7 +27,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     [SerializeField] public int Def;
     [SerializeField] public float AtkSpeed;
     [SerializeField] public int AtkRange;
-    [SerializeField] public int MoveSpeed;
+    [SerializeField] public float MoveSpeed;
     [Header("플레이어 업그레이드 수치")]
     [SerializeField] public int atkUp;
     [SerializeField] public int defUp;
@@ -57,8 +57,32 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     [Header("플레이어 공격관련")]
     [SerializeField]private CapsuleCollider playerAtkBox;
     [SerializeField] public float timebetAttack = 0.5f;
-    public float lastAttackTimebet;
+    public float lastAttackTimebet; 
     private bool canAtk;
+
+    [Header("플레이어 스킬 사용가능여부")]
+    [SerializeField] public bool canHeal;
+    [SerializeField] public bool canUlt;
+    [SerializeField] public bool canReturn;
+    [SerializeField] public bool canSteam;
+    [SerializeField] public bool canTeleport;
+    [SerializeField] public bool canSkillAtk; 
+    [Header("플레이어 스킬 구매여부")]
+    [SerializeField] public bool buyHeal;
+    [SerializeField] public bool buyUlt;
+    [SerializeField] public bool buyReturn;
+    [SerializeField] public bool buySteam;
+    [SerializeField] public bool buyTeleport;
+    [SerializeField] public bool buySkillAtk;
+    [Header("플레이어 스킬 쿨타임")]
+    [SerializeField] public int healCool;
+    [SerializeField] public int returnCool;
+    [SerializeField] public int steamCool;
+    [SerializeField] public int ultCool;
+    [SerializeField] public int telCool;
+    [SerializeField] public int skillAtkCool;
+    [Header("플레이어 귀환위치")]
+    [SerializeField] Transform returnPoint;
 
 
     private void Awake()
@@ -70,6 +94,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         currentHp = MaxHp;
         canAtk = true;
         playerNum = 1; //이건 나중에 대기방에 들어온 순서대로 번호를 부여해주는걸로 바꿔야함
+        UIManager.instance.HpSet(MaxHp,currentHp);
 
     }
 
@@ -204,7 +229,6 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     }
     public void TakeDamage(int damage)
     {
-        Debug.Log("쳐맞음");
         int takeDamage;
         if (damage - Def <= 0)
         {
@@ -214,13 +238,13 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         {
             takeDamage = (damage - Def);
         }
-
         currentHp -= takeDamage;
         if (currentHp <= 0)
         {
             currentHp = 0;
             Die();
         }
+        UIManager.instance.HpSet(MaxHp,currentHp);
     }
     private void Attack()
     {
@@ -350,5 +374,165 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
             targetList.Clear();
         }
     }
+
+    public void Heal()
+    {
+        if (!buyHeal)
+        {
+            if (skillPoint - GameManager.instance.healValue >=0)
+            {
+                skillPoint -= GameManager.instance.healValue;
+                UIManager.instance.SkillPointSet();
+                buyHeal = true;
+                canHeal = true;
+                UIManager.instance.BuyHeal();
+                return;
+            }
+        }
+        if (canHeal)
+        {
+            StartCoroutine(Heal_co());
+            UIManager.instance.HpSet(MaxHp,currentHp);
+            UIManager.instance.StartCool(healCool,0);
+        }
+    }
+
+    private IEnumerator Heal_co()
+    {
+        canHeal = false;
+        currentHp = MaxHp;
+        yield return new WaitForSeconds(healCool);
+        canHeal = true;
+    }
+
+    public void Return()
+    {
+        if (!buyReturn)
+        {
+            if (skillPoint - GameManager.instance.returnValue >= 0)
+            {
+                skillPoint -= GameManager.instance.returnValue;
+                UIManager.instance.SkillPointSet();
+                buyReturn = true;
+                canReturn = true;
+                UIManager.instance.BuyReturn();
+                return;
+            }
+        }
+        if (canReturn)
+        {
+            StartCoroutine(Return_co());
+            UIManager.instance.StartCool(returnCool, 2);
+        }
+    }
+
+    private IEnumerator Return_co()
+    {
+        canReturn = false;
+        transform.position = returnPoint.position;
+        yield return new WaitForSeconds(returnCool);
+        canReturn = true;
+    }
+
+    public void Ult()
+    {
+        if (!buyUlt)
+        {
+            if (skillPoint - GameManager.instance.ultValue >= 0)
+            {
+                skillPoint -= GameManager.instance.ultValue;
+                UIManager.instance.SkillPointSet();
+                buyUlt = true;
+                canUlt = true;
+                UIManager.instance.BuyUlt();
+                return;
+            }
+        }
+        if (canUlt)
+        {
+            StartCoroutine(Ult_co());
+            UIManager.instance.StartCool(ultCool, 1);
+        }
+    }
+    
+    IEnumerator Ult_co()
+    {
+        canUlt = false;
+        yield return new WaitForSeconds(ultCool);
+        canUlt = true;
+    }
+
+    public void Steam()
+    {
+        if (!buySteam)
+        {
+            if (skillPoint - GameManager.instance.steamValue >= 0)
+            {
+                skillPoint -= GameManager.instance.steamValue;
+                UIManager.instance.SkillPointSet();
+                buySteam = true;
+                canSteam = true;
+                UIManager.instance.BuySteam();
+                return;
+            }
+        }
+        if (canSteam)
+        {
+            StartCoroutine(Steampack_co());
+            UIManager.instance.StartCool(steamCool, 3);
+        }
+    }
+
+    private IEnumerator Steampack_co()
+    {
+        canSteam = false;
+        currentHp -= 10;
+        UIManager.instance.HpSet(MaxHp, currentHp);
+        AtkSpeed *= 0.5f;
+        MoveSpeed *= 1.5f;
+        agent.speed = MoveSpeed;
+        yield return new WaitForSeconds(20f);
+        AtkSpeed *= 2f;
+        MoveSpeed /= 1.5f;
+        agent.speed = MoveSpeed;
+        canSteam = true;
+    }
+
+    public void TelePort()
+    {
+        if (!buyTeleport)
+        {
+            if (skillPoint - GameManager.instance.TelValue >= 0)
+            {
+                skillPoint -= GameManager.instance.TelValue;
+                UIManager.instance.SkillPointSet();
+                buyTeleport = true;
+                canTeleport = true;
+                UIManager.instance.BuyTeleport();
+                return;
+            }
+        }
+        if (canTeleport)
+        {
+            StartCoroutine(Steampack_co());
+            UIManager.instance.StartCool(steamCool, 3);
+        }
+       
+    }
+
+    private IEnumerator Teleport_co()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit))
+            {
+                transform.position = hit.transform.position;
+            }
+            yield return new WaitForSeconds(telCool);
+        }
+    }
 }
+
+
 
