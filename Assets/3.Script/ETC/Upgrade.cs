@@ -8,13 +8,21 @@ public class Upgrade : MonoBehaviour
     [SerializeField]PlayerControl player;
     private int upgradeMoney = 5;
 
+    private void OnEnable()
+    {
+        player.canSkill = false;
+    }
+    private void OnDisable()
+    {
+        player.canSkill = true;
+    }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             AtkUpgrade();
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             DefUpgrade();
         }
@@ -22,7 +30,7 @@ public class Upgrade : MonoBehaviour
         {
             AtkSpeedUpgrade();
         }
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             HpUpgrade();
         }
@@ -46,6 +54,7 @@ public class Upgrade : MonoBehaviour
             player.atkUp++;
             UIManager.instance.MoneySet(player.money, player.playerNum-1);
             UIManager.instance.SetUpgradePower(player.atkUp,player.hpUp);
+            player.SetUpgrade();
         }
         
     }
@@ -62,9 +71,8 @@ public class Upgrade : MonoBehaviour
             player.money -= money;
             player.defUp++;
             UIManager.instance.MoneySet(player.money, player.playerNum - 1);
-            UIManager.instance.SetUpgradePower(player.atkUp, player.hpUp);
-
-
+            UIManager.instance.SetUpgradePower(player.atkUp, player.defUp);
+            player.SetUpgrade();
         }
     }
     public void AtkSpeedUpgrade()
@@ -79,9 +87,7 @@ public class Upgrade : MonoBehaviour
             player.money -= money;
             player.atkSpeedUp++;
             UIManager.instance.MoneySet(player.money, player.playerNum - 1);
-            UIManager.instance.SetUpgradePower(player.atkUp, player.hpUp);
-
-
+            player.SetUpgrade();
         }
     }
     public void HpUpgrade()
@@ -96,9 +102,8 @@ public class Upgrade : MonoBehaviour
             player.money -= money;
             player.hpUp++;
             UIManager.instance.MoneySet(player.money, player.playerNum - 1);
-            UIManager.instance.SetUpgradePower(player.atkUp, player.hpUp);
-
-
+            player.SetUpgrade();
+            UIManager.instance.HpSet(player.MaxHp,player.currentHp);
         }
     }
 }

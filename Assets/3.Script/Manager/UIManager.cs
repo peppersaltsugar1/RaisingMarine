@@ -8,7 +8,9 @@ public class UIManager : MonoBehaviour
     [Header("스코어 텍스트")]
     [SerializeField] Text[] scoreText;
     [Header("머니 텍스트")]
-    [SerializeField] Text[] moneyText;
+    [SerializeField] Text[] moneyText;  
+    [Header("스킬포인트 텍스트")]
+    [SerializeField] Text[] skillPointText;
     [Header("업그레이드 UI")]
     [SerializeField] GameObject[] upgradeUI;
     [Header("슬롯 UI")]
@@ -22,7 +24,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Text defUpgrade;
     [Header("플레이어 HP")]
     [SerializeField] Text playerHp;
-    [SerializeField] GameObject playerPic;
+    [SerializeField] Image playerPic;
 
     [Header("플레이어 UI목록")]
     [SerializeField] GameObject[] playerUIList;
@@ -30,6 +32,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] Sprite[] skillList;
     [Header("쿨타임UI")]
     [SerializeField] Image[] coolTimeImage;
+    [Header("플레이어 HP 스프라이트")]
+    [SerializeField] Sprite[] playerHPImageList;
 
 
     public static UIManager instance = null;
@@ -60,9 +64,9 @@ public class UIManager : MonoBehaviour
     {
         moneyText[index].text = money.ToString();
     }
-    public void SkillPointSet()
+    public void SkillPointSet(int skillPoint, int index)
     {
-
+        skillPointText[index].text = skillPoint.ToString();
     }
 
     public void UseUpgrade()
@@ -84,7 +88,7 @@ public class UIManager : MonoBehaviour
             // Slot의 자식 객체들 중에서 활성화된 객체가 있는지 검사
             foreach (Transform child in childObjects)
             {
-                if (child.gameObject != slot && child.gameObject.activeSelf)
+                if (child.gameObject != slot && child.gameObject.activeSelf&&child.name!="CoolTime")
                 {
                     // 활성화된 객체를 비활성화
                     child.gameObject.SetActive(false);
@@ -94,6 +98,22 @@ public class UIManager : MonoBehaviour
     }
     public void HpSet(int MaxHp, int currentHp)
     {
+        if (currentHp > MaxHp * 0.5)
+        {
+            playerPic.sprite = playerHPImageList[0];
+            playerHp.color = Color.green;
+        }
+        if(currentHp <= MaxHp * 0.5)
+        {
+            playerPic.sprite = playerHPImageList[1];
+            playerHp.color = Color.yellow;
+        }
+        if(currentHp <= MaxHp * 0.2)
+        {
+            playerPic.sprite = playerHPImageList[2];
+            playerHp.color = Color.red;
+        }
+
         playerHp.text = currentHp.ToString() + "/" + MaxHp.ToString();
     }
 
@@ -143,7 +163,7 @@ public class UIManager : MonoBehaviour
         Image healImage = playerUIList[7].GetComponent<Image>();
         healImage.sprite = skillList[4];
     }
-    public void BuySkill()
+    public void BuySkillAtk()
     {
         Image healImage = playerUIList[8].GetComponent<Image>();
         healImage.sprite = skillList[5];
@@ -170,6 +190,13 @@ public class UIManager : MonoBehaviour
             }
         }
 
+    }
+
+
+    public void OnSkill()
+    {
+        ESC();
+        escBtn.SetActive(true);
     }
 
 

@@ -28,11 +28,13 @@ public class PlayerAttack : MonoBehaviour
                 }
                 return;
             }
-            if (!player.isDead && Time.time >= player.lastAttackTimebet + player.timebetAttack) 
+            if (other.TryGetComponent(out MonsterControl monster))
             {
-                player.lastAttackTimebet = Time.time;
-                other.TryGetComponent(out Monster monster);
-                monster.TakeDamage(player.Atk,player.playerNum);
+                if (!player.isDead && Time.time >= player.lastAttackTimebet + player.timebetAttack)
+                {
+                    player.lastAttackTimebet = Time.time;
+                    monster.TakeDamage(player.Atk, player.playerNum);
+                }
             }
         }
     }

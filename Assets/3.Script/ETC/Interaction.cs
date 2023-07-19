@@ -12,7 +12,7 @@ public class Interaction : MonoBehaviour
     {
         if (interaction_ob.activeSelf)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 UIManager.instance.UseUpgrade();
                 upgrade.SetActive(true);
