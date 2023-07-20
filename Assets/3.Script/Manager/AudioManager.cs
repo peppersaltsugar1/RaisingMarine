@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Audio;
 
 [System.Serializable]
 public class Sound
@@ -22,6 +24,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioSource bgmPlay;
     [SerializeField] public AudioSource[] sfxPlay;
 
+
     private void Awake()
     {
         if (instance == null)
@@ -34,6 +37,7 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
         AudioSetting();
+        
     }
 
     private void AudioSetting()
@@ -80,4 +84,6 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
+
+   
 }
