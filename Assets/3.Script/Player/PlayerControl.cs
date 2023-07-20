@@ -37,13 +37,13 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     [SerializeField] public int atkSpeedUp;
     [Header("업그레이드 계수")]
     [Header("공격력계수")]
-    [SerializeField] private int atkPower;
+    [SerializeField] public int atkPower;
     [Header("방어력계수")]
-    [SerializeField] private int defkPower;
+    [SerializeField] public int defkPower;
     [Header("공격속도계수계수")]
-    [SerializeField] private float atkSpeedPower;
+    [SerializeField] public float atkSpeedPower;
     [Header("체력계수")]
-    [SerializeField] private int hpPower;
+    [SerializeField] public int hpPower;
 
 
     [Header("플레이어 자원")]
@@ -128,7 +128,14 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
             }
             if (canSkill)
             {
-
+                if (Input.GetKeyDown(KeyCode.M))
+                {
+                    Move_btn();
+                }
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    Attack_btn();
+                }
                 if (Input.GetKeyDown(KeyCode.B))
                 {
                     Return();
@@ -224,6 +231,17 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         TargetReset();
         EndAttack();
         playerAtkBox.enabled = false;
+        agent.SetDestination(dest);
+        destination = dest;
+        isMove = true;
+        animator.SetBool("isMove", true);
+    }
+    
+    private void AttackMove(Vector3 dest)
+    {
+        agent.isStopped = false;
+        TargetReset();
+        EndAttack();
         agent.SetDestination(dest);
         destination = dest;
         isMove = true;
@@ -416,10 +434,10 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     {
         if (!buyHeal)
         {
-            if (skillPoint - GameManager.instance.healValue >=0)
+            if (money - GameManager.instance.healValue >=0)
             {
-                skillPoint -= GameManager.instance.healValue;
-                UIManager.instance.SkillPointSet(skillPoint, playerNum - 1);
+                money -= GameManager.instance.healValue;
+                UIManager.instance.MoneySet(money, playerNum - 1);
                 buyHeal = true;
                 canHeal = true;
                 UIManager.instance.BuyHeal();
@@ -447,10 +465,10 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     {
         if (!buyReturn)
         {
-            if (skillPoint - GameManager.instance.returnValue >= 0)
+            if (money - GameManager.instance.returnValue >= 0)
             {
-                skillPoint -= GameManager.instance.returnValue;
-                UIManager.instance.SkillPointSet(skillPoint,playerNum-1);
+                money -= GameManager.instance.returnValue;
+                UIManager.instance.MoneySet(money, playerNum-1);
                 buyReturn = true;
                 canReturn = true;
                 UIManager.instance.BuyReturn();
@@ -466,12 +484,17 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
 
     private IEnumerator Return_co()
     {
+        playerAtkBox.enabled = false;
         target = null;
-        agent.Stop();
+        TargetReset();
         canReturn = false;
         returnParticle.Play();
-        transform.position = returnPoint.position;
+        //SetDestination(returnPoint.position);
+        agent.enabled = false;
+        transform.position = new Vector3(28, 2, 3);
         camera.transform.position = new Vector3(transform.position.x, camera.transform.position.y, transform.position.z+10);
+        playerAtkBox.enabled = true;
+        agent.enabled = true;
         yield return new WaitForSeconds(returnCool);
         canReturn = true;
     }
@@ -480,10 +503,10 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     {
         if (!buyUlt)
         {
-            if (skillPoint - GameManager.instance.ultValue >= 0)
+            if (money - GameManager.instance.ultValue >= 0)
             {
-                skillPoint -= GameManager.instance.ultValue;
-                UIManager.instance.SkillPointSet(skillPoint, playerNum - 1);
+                money -= GameManager.instance.ultValue;
+                UIManager.instance.MoneySet(money, playerNum - 1);
                 buyUlt = true;
                 canUlt = true;
                 UIManager.instance.BuyUlt();
@@ -508,10 +531,10 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     {
         if (!buySteam)
         {
-            if (skillPoint - GameManager.instance.steamValue >= 0)
+            if (money - GameManager.instance.steamValue >= 0)
             {
-                skillPoint -= GameManager.instance.steamValue;
-                UIManager.instance.SkillPointSet(skillPoint, playerNum - 1);
+                money -= GameManager.instance.steamValue;
+                UIManager.instance.MoneySet(money, playerNum - 1);
                 buySteam = true;
                 canSteam = true;
                 UIManager.instance.BuySteam();
@@ -544,10 +567,10 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     {
         if (!buyTeleport)
         {
-            if (skillPoint - GameManager.instance.TelValue >= 0)
+            if (money - GameManager.instance.TelValue >= 0)
             {
-                skillPoint -= GameManager.instance.TelValue;
-                UIManager.instance.SkillPointSet(skillPoint, playerNum - 1);
+                money -= GameManager.instance.TelValue;
+                UIManager.instance.MoneySet(money, playerNum - 1);
                 buyTeleport = true;
                 canTeleport = true;
                 UIManager.instance.BuyTeleport();
@@ -621,10 +644,10 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     {
         if (!buySkillAtk)
         {
-            if (skillPoint - GameManager.instance.skillAtkValue >= 0)
+            if (money - GameManager.instance.skillAtkValue >= 0)
             {
-                skillPoint -= GameManager.instance.skillAtkValue;
-                UIManager.instance.SkillPointSet(skillPoint, playerNum - 1);
+                money -= GameManager.instance.skillAtkValue;
+                UIManager.instance.MoneySet(money, playerNum - 1);
                 buySkillAtk = true;
                 canSkillAtk = true;
                 UIManager.instance.BuySkillAtk();
@@ -701,6 +724,115 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         MaxHp = (hpUp * hpPower)+setMaxHp;
         AtkSpeed = (1 - (atkSpeedUp * atkSpeedPower));
     }
+
+    public void Move_btn()
+    {
+        StartCoroutine(Move_co());
+    }
+    public void Stop_btn()
+    {
+        Stop();
+    }
+    public void Attack_btn()
+    {
+        StartCoroutine(AttackMove_co());
+    }
+
+    private IEnumerator Move_co()
+    {
+        bool waitingForInput = true;
+        canSkill = false;
+
+        while (waitingForInput)
+        {
+            UIManager.instance.OnSkill();
+            if (Input.GetMouseButtonDown(0))
+            {
+                playerAtkBox.enabled = false;
+                canSkill = true;
+                RaycastHit hit;
+                
+                if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit))
+                {
+                    var dir = new Vector3(hit.point.x, hit.point.y, hit.point.z) - transform.position;  // 변경
+                    animator.transform.forward = dir;
+                    if (hit.collider.gameObject.CompareTag("Enemy"))
+                    {
+                        target = hit.transform;
+                        OnTarget(target);
+                    }
+                    else
+                    {
+                        SetDestination(hit.point);
+                    }
+                }
+                waitingForInput = false; // 입력을 받았으므로 대기 상태 해제
+                UIManager.instance.PlayerUISet();
+                //}
+
+
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                UIManager.instance.PlayerUISet();
+                waitingForInput = true;
+                canSkill = true;
+                yield break;
+            }
+
+            yield return null;
+        }
+        canSkill = true;
+        yield return null;
+
+    }
+    private IEnumerator AttackMove_co()
+    {
+        bool waitingForInput = true;
+        canSkill = false;
+
+        while (waitingForInput)
+        {
+            UIManager.instance.OnSkill();
+            if (Input.GetMouseButtonDown(0))
+            {
+                playerAtkBox.enabled = true;
+                canSkill = true;
+                RaycastHit hit;
+                if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit))
+                {
+                    var dir = new Vector3(hit.point.x, hit.point.y, hit.point.z) - transform.position;  // 변경
+                    animator.transform.forward = dir;
+                    if (hit.collider.gameObject.CompareTag("Enemy"))
+                    {
+                        target = hit.transform;
+                        OnTarget(target);
+                    }
+                    else
+                    {
+                        AttackMove(hit.point);
+                    }
+                }
+                waitingForInput = false; // 입력을 받았으므로 대기 상태 해제
+                UIManager.instance.PlayerUISet();
+                //}
+
+
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                UIManager.instance.PlayerUISet();
+                waitingForInput = true;
+                canSkill = true;
+                yield break;
+            }
+
+            yield return null;
+        }
+        canSkill = true;
+        yield return null;
+    }
+
 }
 
 

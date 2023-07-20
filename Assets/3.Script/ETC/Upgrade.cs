@@ -54,6 +54,7 @@ public class Upgrade : MonoBehaviour
             player.atkUp++;
             UIManager.instance.MoneySet(player.money, player.playerNum-1);
             UIManager.instance.SetUpgradePower(player.atkUp,player.hpUp);
+            UIManager.instance.UpgradeMoneySet(money.ToString());
             player.SetUpgrade();
         }
         
@@ -72,6 +73,7 @@ public class Upgrade : MonoBehaviour
             player.defUp++;
             UIManager.instance.MoneySet(player.money, player.playerNum - 1);
             UIManager.instance.SetUpgradePower(player.atkUp, player.defUp);
+            UIManager.instance.UpgradeMoneySet(money.ToString());
             player.SetUpgrade();
         }
     }
@@ -87,6 +89,7 @@ public class Upgrade : MonoBehaviour
             player.money -= money;
             player.atkSpeedUp++;
             UIManager.instance.MoneySet(player.money, player.playerNum - 1);
+            UIManager.instance.UpgradeMoneySet(money.ToString());
             player.SetUpgrade();
         }
     }
@@ -104,6 +107,8 @@ public class Upgrade : MonoBehaviour
             UIManager.instance.MoneySet(player.money, player.playerNum - 1);
             player.SetUpgrade();
             UIManager.instance.HpSet(player.MaxHp,player.currentHp);
+            UIManager.instance.UpgradeMoneySet(money.ToString());
+
         }
     }
 }

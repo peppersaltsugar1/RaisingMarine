@@ -25,7 +25,8 @@ public class UIManager : MonoBehaviour
     [Header("플레이어 HP")]
     [SerializeField] Text playerHp;
     [SerializeField] Image playerPic;
-
+    [Header("툴팁")]
+    [SerializeField] ToolTip tooltip;
     [Header("플레이어 UI목록")]
     [SerializeField] GameObject[] playerUIList;
     [Header("스킬스프라이트")]
@@ -34,6 +35,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] Image[] coolTimeImage;
     [Header("플레이어 HP 스프라이트")]
     [SerializeField] Sprite[] playerHPImageList;
+    [Header("업그레이드 슬롯")]
+    [SerializeField] Text upgradeSlottext;
 
 
     public static UIManager instance = null;
@@ -199,5 +202,22 @@ public class UIManager : MonoBehaviour
         escBtn.SetActive(true);
     }
 
-
+    public void ShowToolTip(string text, Vector3 pos)
+    {
+        tooltip.ShowToolTip(text, pos);
+    }
+    public void HideToolTip()
+    {
+        tooltip.HideToolTip();
+    }
+        
+    public void ShowUpToolTip(string text,string upgrade, Vector3 pos)
+    {
+        tooltip.ShowUpgradeToolTip(text,upgrade, pos);
+    }
+   
+    public void UpgradeMoneySet(string money)
+    {
+        upgradeSlottext.text = money;
+    }
 }

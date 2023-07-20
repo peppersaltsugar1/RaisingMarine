@@ -6,12 +6,24 @@ public class MonsterObject : Monster
 {
     [Header("스포너")]
     [SerializeField] private SpawnTrigger trigger;
+    [Header("스코어")]
+
+    [SerializeField] private int upScore;
+
+
+    private void Start()
+    {
+        score = upScore;
+    }
+
     private void OnDisable()
     {
         if (trigger != null)
         {
             trigger.SpawnMonster();
         }
+        PointUp();
+        UIManager.instance.ScoreSet();
     }
     public override void TakeDamage(int damage)
     {

@@ -7,16 +7,16 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
     [TextArea]
     public string text;
-    [SerializeField]private PlayerControl player;
 
-    [SerializeField]private ToolTip tooltip;
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        tooltip.ShowToolTip(this);
+        Vector3 movePos = new Vector3(transform.position.x, transform.position.y + 80, transform.position.z);
+        UIManager.instance.ShowToolTip(text,movePos);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        tooltip.HideToolTip();
+        UIManager.instance.HideToolTip();
     }
 }
