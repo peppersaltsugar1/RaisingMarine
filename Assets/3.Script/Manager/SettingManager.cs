@@ -13,9 +13,13 @@ public class SettingManager : MonoBehaviour
     public AudioSource SFX;
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        FindObjectOfType<AudioManager>();
+       GameObject bgmObj= GameObject.Find("BGM Source");
+        BGM = bgmObj.GetComponent<AudioSource>();
+       GameObject sfxObj= GameObject.Find("SFX Source");
+        SFX = sfxObj.GetComponent<AudioSource>();
         transform.gameObject.SetActive(false);
-        // BGM 슬라이더의 이벤트에 SetBGM 메서드 연결
+        // BGM 슬라이더의 이벤트에 SetBGM 메서드 연결 
         bgmSlider.onValueChanged.AddListener(SetBGM);
         // SFX 슬라이더의 이벤트에 SetSFX 메서드 연결
         sfxSlider.onValueChanged.AddListener(SetSFX);

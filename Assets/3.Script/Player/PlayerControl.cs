@@ -144,7 +144,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
                 {
                     TelePort();
                 }
-                if (Input.GetKeyDown(KeyCode.Q))
+                if (Input.GetKeyDown(KeyCode.T))
                 {
                     Steam();
                 }
@@ -235,6 +235,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         destination = dest;
         isMove = true;
         animator.SetBool("isMove", true);
+        MoveTalk();
     }
     
     private void AttackMove(Vector3 dest)
@@ -246,6 +247,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         destination = dest;
         isMove = true;
         animator.SetBool("isMove", true);
+        MoveTalk();
     }
     private void OnTarget(Transform target)
     {
@@ -306,6 +308,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         playerAtkBox.enabled = true;
         transform.LookAt(target);
         animator.SetBool("isAttack", true);
+        AudioManager.instance.PlaySFX("PlayerAttack");
         gunFireParticle.Play();
         atkParticle.transform.position = target.transform.position;
         atkParticle.Play();
@@ -357,6 +360,10 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         canAtk = false;
         isDead = true;
         yield return new WaitForSeconds(5f);
+        AudioManager.instance.StopBGM();
+        AudioManager.instance.PlayerBGM("EndGame");
+        AudioManager.instance.PlaySFX("PlayerDie");
+        UIManager.instance.SetDeadBoard();
         Destroy(gameObject);
     }
 
@@ -455,6 +462,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     private IEnumerator Heal_co()
     {
         healParticle.Play();
+        AudioManager.instance.PlaySFX("PlayerHeal");
         canHeal = false;
         currentHp = MaxHp;
         yield return new WaitForSeconds(healCool);
@@ -488,6 +496,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         target = null;
         TargetReset();
         canReturn = false;
+        AudioManager.instance.PlaySFX("PlayerReturn");
         returnParticle.Play();
         //SetDestination(returnPoint.position);
         agent.enabled = false;
@@ -553,6 +562,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         canSteam = false;
         currentHp -= 10;
         UIManager.instance.HpSet(MaxHp, currentHp);
+        AudioManager.instance.PlaySFX("SteamPack");
         AtkSpeed *= 0.5f;
         MoveSpeed *= 1.5f;
         agent.speed = MoveSpeed;
@@ -612,7 +622,6 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
                     telParticle.Play();
                     agent.isStopped = true;
                     transform.position = hit.point;
-
                     UIManager.instance.StartCool(steamCool, 4);
                     waitingForInput = false; // 입력을 받았으므로 대기 상태 해제
                     UIManager.instance.PlayerUISet();
@@ -689,6 +698,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
                     agent.isStopped = true;
                     animator.SetBool("isSkillAttack", true);
                     skillatkParticle.gameObject.SetActive(true);
+                    AudioManager.instance.PlaySFX("PlayerSkillAttack");
                     skillatkParticle.transform.position = hit.point;
                     skillatkParticle.Play();
                     UIManager.instance.StartCool(skillAtkCool, 5);
@@ -832,6 +842,23 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         canSkill = true;
         yield return null;
     }
+
+    private void MoveTalk()
+    {
+        int rand = Random.Range(0, 8);
+        switch (rand)
+        {
+            case 0 : AudioManager.instance.PlaySFX("MoveTalk1"); break;
+            case 1 : AudioManager.instance.PlaySFX("MoveTalk2"); break;
+            case 2 : AudioManager.instance.PlaySFX("MoveTalk3"); break;
+            case 3 : AudioManager.instance.PlaySFX("MoveTalk4"); break;
+            case 4 : AudioManager.instance.PlaySFX("MoveTalk5"); break;
+            case 5 : AudioManager.instance.PlaySFX("MoveTalk6"); break;
+            case 6 : AudioManager.instance.PlaySFX("MoveTalk7"); break;
+            case 7 : AudioManager.instance.PlaySFX("MoveTalk8"); break;
+        }
+    }
+
 
 }
 

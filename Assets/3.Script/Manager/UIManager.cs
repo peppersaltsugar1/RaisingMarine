@@ -38,6 +38,13 @@ public class UIManager : MonoBehaviour
     [Header("업그레이드 슬롯")]
     [SerializeField] Text upgradeSlottext;
 
+    [Header("메뉴UI")]
+    [SerializeField] GameObject menuUI;
+    [SerializeField] GameObject setting;
+    [Header("사망UI")]
+    [SerializeField] GameObject deadUI;
+
+
 
     public static UIManager instance = null;
     private void Awake()
@@ -219,5 +226,34 @@ public class UIManager : MonoBehaviour
     public void UpgradeMoneySet(string money)
     {
         upgradeSlottext.text = money;
+    }
+
+    public void OpenMenu()
+    {
+        menuUI.SetActive(true);
+    }
+
+    public void OpenSetting()
+    {
+        AudioManager.instance.PlaySFX("UIClick");
+        setting.SetActive(true);
+
+    }
+    public void EndGame()
+    {
+        AudioManager.instance.PlaySFX("UIClick");
+        Application.Quit();
+
+    }
+
+    public void Return()
+    {
+        AudioManager.instance.PlaySFX("UIClick");
+        menuUI.SetActive(false);
+    }
+
+    public void SetDeadBoard()
+    {
+        deadUI.SetActive(true);
     }
 }

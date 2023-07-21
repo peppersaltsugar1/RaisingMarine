@@ -51,6 +51,7 @@ public class MonsterControl : Monster
 
     private void SetData(MonsterData monsterdata)
     {
+        monsterName = monsterdata.monsterName;
         MaxHp = monsterdata.MaxHp;
         Atk = monsterdata.Atk;
         Def = monsterdata.Def;

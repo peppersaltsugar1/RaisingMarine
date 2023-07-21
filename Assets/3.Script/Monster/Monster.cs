@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class Monster : MonoBehaviour, ITakeDamage
 {
     UnityEvent onDeath;
+    public string monsterName;
     public int MaxHp { get; protected set; }
     public int Atk { get; protected set; }
     public int Def { get; protected set; }
@@ -98,6 +99,7 @@ public class Monster : MonoBehaviour, ITakeDamage
         canAttack = false;
         enemyAnimator.SetBool("isMove", false);
         enemyAnimator.SetTrigger("onAttack");
+        AudioManager.instance.PlaySFX(monsterName + "Attack");
         yield return new WaitForSeconds(AtkSpeed);
         canAttack = true;
     }
@@ -106,6 +108,7 @@ public class Monster : MonoBehaviour, ITakeDamage
         hitBox.enabled = false;
         isdead = true;
         enemyAnimator.SetTrigger("isDie");
+        AudioManager.instance.PlaySFX(monsterName + "Die");
         agent.isStopped = true;
         yield return new WaitForSeconds(3f);    
         transform.gameObject.SetActive(false);

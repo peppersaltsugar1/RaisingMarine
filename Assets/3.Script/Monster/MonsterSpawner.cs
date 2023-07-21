@@ -28,9 +28,12 @@ public class MonsterSpawner : Monster
     {
         for(int i = 0; i < boss.Length; i++)
         {
-        Instantiate(boss[i], transform.position, Quaternion.identity);
+            Instantiate(boss[i], transform.position, Quaternion.identity);
         }
-        GameManager.instance.spawnerList[spawnerNum].StartSpawn();
+        if (GameManager.instance.spawnerList[spawnerNum] != null)
+        {
+            GameManager.instance.spawnerList[spawnerNum].StartSpawn();
+        }
     }
 
     public void StartSpawn()

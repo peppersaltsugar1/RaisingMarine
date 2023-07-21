@@ -36,6 +36,7 @@ public class MonsterObject : Monster
         if (currentHp <= 0)
         {
             currentHp = 0;
+            AudioManager.instance.PlaySFX("BrokenZerg");
             transform.gameObject.SetActive(false);
             isdead = true;
             PointUp();
