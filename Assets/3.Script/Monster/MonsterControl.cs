@@ -66,7 +66,7 @@ public class MonsterControl : Monster
     {
         if (hasTarget&&!isdead)
         {
-            if (Vector3.Distance(target.position, transform.position) <= AtkRange)
+            if (Vector3.Distance(target.position, transform.position) <= AtkRange&&target.CompareTag("Player"))
             {
                 transform.LookAt(target);
                 Attack();

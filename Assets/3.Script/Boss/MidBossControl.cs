@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MidBossControl : Monster
 {
@@ -28,6 +29,12 @@ public class MidBossControl : Monster
         canMove = true;
     }
 
+    private void OnDisable()
+    {
+        AudioManager.instance.StopBGM();
+        AudioManager.instance.PlayerBGM("Clear");
+        SceneManager.LoadScene("Clear");
+    }
 
     private void Update()
     {

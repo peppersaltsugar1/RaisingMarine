@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour,ITakeDamage
 {
@@ -91,6 +92,9 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     [Header("플레이어 귀환위치")]
     [SerializeField] Transform returnPoint;
 
+    [Header("플레이어 사운드 조건")]
+    [SerializeField] private bool canTalk;
+
 
     private void Awake()
     {
@@ -103,6 +107,7 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         playerNum = 1; //이건 나중에 대기방에 들어온 순서대로 번호를 부여해주는걸로 바꿔야함
         UIManager.instance.HpSet(MaxHp,currentHp);
         canSkill = true;
+        canTalk = true;
     }
 
     void Update()
@@ -359,12 +364,11 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         animator.SetTrigger("isDead");
         canAtk = false;
         isDead = true;
+        AudioManager.instance.PlaySFX("PlayerDie");
         yield return new WaitForSeconds(5f);
         AudioManager.instance.StopBGM();
         AudioManager.instance.PlayerBGM("EndGame");
-        AudioManager.instance.PlaySFX("PlayerDie");
-        UIManager.instance.SetDeadBoard();
-        Destroy(gameObject);
+        SceneManager.LoadScene("GameOver");
     }
 
     private void SetTarget()
@@ -845,21 +849,30 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
 
     private void MoveTalk()
     {
-        int rand = Random.Range(0, 8);
-        switch (rand)
+        if (canTalk)
         {
-            case 0 : AudioManager.instance.PlaySFX("MoveTalk1"); break;
-            case 1 : AudioManager.instance.PlaySFX("MoveTalk2"); break;
-            case 2 : AudioManager.instance.PlaySFX("MoveTalk3"); break;
-            case 3 : AudioManager.instance.PlaySFX("MoveTalk4"); break;
-            case 4 : AudioManager.instance.PlaySFX("MoveTalk5"); break;
-            case 5 : AudioManager.instance.PlaySFX("MoveTalk6"); break;
-            case 6 : AudioManager.instance.PlaySFX("MoveTalk7"); break;
-            case 7 : AudioManager.instance.PlaySFX("MoveTalk8"); break;
+            StartCoroutine(MoveTalk_co());
         }
     }
 
-
+    private IEnumerator MoveTalk_co()
+    {
+        canTalk = false;
+        int rand = Random.Range(0, 8);
+        switch (rand)
+        {
+            case 0: AudioManager.instance.PlaySFX("MoveTalk1"); break;
+            case 1: AudioManager.instance.PlaySFX("MoveTalk2"); break;
+            case 2: AudioManager.instance.PlaySFX("MoveTalk3"); break;
+            case 3: AudioManager.instance.PlaySFX("MoveTalk4"); break;
+            case 4: AudioManager.instance.PlaySFX("MoveTalk5"); break;
+            case 5: AudioManager.instance.PlaySFX("MoveTalk6"); break;
+            case 6: AudioManager.instance.PlaySFX("MoveTalk7"); break;
+            case 7: AudioManager.instance.PlaySFX("MoveTalk8"); break;
+        }
+        yield return new WaitForSeconds(2f);
+        canTalk = true;
+    }
 }
 
 

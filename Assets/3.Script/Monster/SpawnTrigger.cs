@@ -25,6 +25,7 @@ public class SpawnTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            AudioManager.instance.PlaySFX("MonsterSpawn");
             SpawnMonster();
         }
     }

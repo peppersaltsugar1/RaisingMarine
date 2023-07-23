@@ -8,6 +8,9 @@ public class GameOver : MonoBehaviour
     
     public void GoTitle()
     {
+        AudioManager.instance.StopBGM();
+        AudioManager.instance.PlayerBGM("Title");
+        AudioManager.instance.PlaySFX("UIClick");
         SceneManager.LoadScene("Title");
     }
 }

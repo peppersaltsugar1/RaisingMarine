@@ -8,7 +8,11 @@ public class PlayerAttack : MonoBehaviour
     private void OnParticleCollision(GameObject other)
     {
        PlayerControl player = GetComponentInParent<PlayerControl>();
-        if(other.CompareTag("Enemy"))
+        if (other == null)
+        {
+            return;
+        }
+        if (other.CompareTag("Enemy"))
         {
             if (other.TryGetComponent(out MonsterSpawner spawner))
             {
