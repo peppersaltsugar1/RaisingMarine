@@ -44,6 +44,9 @@ public class UIManager : MonoBehaviour
     [Header("ªÁ∏¡UI")]
     [SerializeField] GameObject deadUI;
 
+    [Header("√§∆√√¢")]
+    [SerializeField] public InputField chat;
+
 
 
     public static UIManager instance = null;
@@ -255,5 +258,28 @@ public class UIManager : MonoBehaviour
     public void SetDeadBoard()
     {
         deadUI.SetActive(true);
+    }
+
+    public void Chat()
+    {
+        if (!chat.gameObject.activeSelf)
+        {
+            chat.gameObject.SetActive(true);
+            chat.ActivateInputField();
+            chat.Select();
+        }
+        else
+        {
+
+            switch (chat.text)
+            {
+                case "showmethemoney":GameManager.instance.SHOWMETHEMONEY(); break;
+                case "poweroverwhelming": GameManager.instance.PowerOverwhelming(); break;
+                case "blacksheepwall": GameManager.instance.BlackSheepWall(); break;
+            }
+            chat.text = "";
+            chat.DeactivateInputField();
+            chat.gameObject.SetActive(false);
+        }
     }
 }

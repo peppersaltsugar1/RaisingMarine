@@ -162,6 +162,14 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
                     Heal();
                 }
             }
+            if (Input.GetKeyDown(KeyCode.Minus))
+            {
+                SHOWMETHEMONEY();
+            }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                UIManager.instance.Chat();
+            }
             
             //PlayerMove();
             //LookMoveDirection();
@@ -872,6 +880,12 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
         }
         yield return new WaitForSeconds(2f);
         canTalk = true;
+    }
+
+    private void SHOWMETHEMONEY()
+    {
+        money += 10000;
+        UIManager.instance.MoneySet(money,playerNum-1);
     }
 }
 

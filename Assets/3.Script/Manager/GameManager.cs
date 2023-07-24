@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]public int TelValue;
     [SerializeField]public int skillAtkValue;
 
+    [SerializeField] PlayerControl player;
     [SerializeField] GameObject boss;
     private bool canSpawn;
     private bool canBossSpawn;
@@ -65,6 +66,31 @@ public class GameManager : MonoBehaviour
     {
         canBossSpawn = false;
         Instantiate(boss, new Vector3(-160, 0, 180), Quaternion.identity);
+    }
+
+    public void SHOWMETHEMONEY()
+    {
+        player.money += 10000;
+        UIManager.instance.MoneySet(10000, playerNum - 1);
+    }
+
+
+    public void PowerOverwhelming()
+    {
+        player.MaxHp = 99999;
+        player.currentHp = 99999;
+        player.Def = 255;
+        UIManager.instance.HpSet(99999,99999);
+        
+    }
+
+    public void BlackSheepWall()
+    {
+        GameObject obj = GameObject.Find("ObjectName");
+        if (obj != null)
+        {
+            obj.SetActive(false);
+        }
     }
 
 }

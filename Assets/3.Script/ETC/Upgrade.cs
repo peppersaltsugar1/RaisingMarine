@@ -52,6 +52,10 @@ public class Upgrade : MonoBehaviour
         {
             player.money -= money;
             player.atkUp++;
+            if (player.atkUp == 100)
+            {
+
+            }
             UIManager.instance.MoneySet(player.money, player.playerNum-1);
             UIManager.instance.SetUpgradePower(player.atkUp,player.defUp);
             UIManager.instance.UpgradeMoneySet(money.ToString());
