@@ -494,7 +494,7 @@ namespace FischlWorks_FogWar
             fogPlaneTextureLerpBuffer.Apply();
         }
 
-
+        
 
         private void UpdateFogPlaneTextureTarget()
         {

@@ -44,20 +44,16 @@ public class Upgrade : MonoBehaviour
     public void AtkUpgrade()
     {
         int money = player.atkUp * upgradeMoney;
-        if(money == 0)
-        {
-            money = upgradeMoney;
-        }
         if (player.money - money >= 0)
         {
             player.money -= money;
             player.atkUp++;
-            if (player.atkUp == 100)
+            if (player.atkUp == 255)
             {
-
+                UIManager.instance.UpgradeEnd(0);
             }
-            UIManager.instance.MoneySet(player.money, player.playerNum-1);
-            UIManager.instance.SetUpgradePower(player.atkUp,player.defUp);
+            UIManager.instance.MoneySet(player.money, player.playerNum - 1);
+            UIManager.instance.SetUpgradePower(player.atkUp, player.defUp);
             UIManager.instance.UpgradeMoneySet(money.ToString());
             AudioManager.instance.PlaySFX("Upgrade");
             player.SetUpgrade();
@@ -71,15 +67,14 @@ public class Upgrade : MonoBehaviour
     public void DefUpgrade()
     {
         int money = player.defUp * upgradeMoney;
-        if (money == 0)
-        {
-            money = upgradeMoney;
-
-        }
         if (player.money - money >= 0)
         {
             player.money -= money;
             player.defUp++;
+            if (player.defUp == 255)
+            {
+                UIManager.instance.UpgradeEnd(1);
+            }
             UIManager.instance.MoneySet(player.money, player.playerNum - 1);
             UIManager.instance.SetUpgradePower(player.atkUp, player.defUp);
             UIManager.instance.UpgradeMoneySet(money.ToString());
@@ -95,14 +90,15 @@ public class Upgrade : MonoBehaviour
     public void AtkSpeedUpgrade()
     {
         int money = player.atkSpeedUp * upgradeMoney;
-        if (money == 0)
-        {
-            money = upgradeMoney;
-        }
+       
         if (player.money - money >= 0)
         {
             player.money -= money;
             player.atkSpeedUp++;
+            if (player.atkSpeedUp == 255)
+            {
+                UIManager.instance.UpgradeEnd(2);
+            }
             UIManager.instance.MoneySet(player.money, player.playerNum - 1);
             UIManager.instance.UpgradeMoneySet(money.ToString());
             AudioManager.instance.PlaySFX("Upgrade");
@@ -117,14 +113,15 @@ public class Upgrade : MonoBehaviour
     public void HpUpgrade()
     {
         int money = player.defUp * upgradeMoney;
-        if (money == 0)
-        {
-            money = upgradeMoney;
-        }
+        
         if (player.money - money >= 0)
         {
             player.money -= money;
             player.hpUp++;
+            if (player.hpUp == 255)
+            {
+                UIManager.instance.UpgradeEnd(3);
+            }
             UIManager.instance.MoneySet(player.money, player.playerNum - 1);
             player.SetUpgrade();
             UIManager.instance.HpSet(player.MaxHp,player.currentHp);

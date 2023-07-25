@@ -16,6 +16,7 @@ public class PlayerSkillAttack : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
+            
 
             if (other.TryGetComponent(out MonsterSpawner spawner))
             {
@@ -27,7 +28,7 @@ public class PlayerSkillAttack : MonoBehaviour
             }
             if (other.TryGetComponent(out MonsterControl monster))
             {
-                    monster.TakeDamage(dmg);
+                    monster.TakeDamage(dmg,player.playerNum);
             }
         }
     }

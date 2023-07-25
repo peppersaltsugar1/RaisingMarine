@@ -37,6 +37,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Sprite[] playerHPImageList;
     [Header("업그레이드 슬롯")]
     [SerializeField] Text upgradeSlottext;
+    [SerializeField] Upgrade upgrade;
 
     [Header("메뉴UI")]
     [SerializeField] GameObject menuUI;
@@ -46,6 +47,7 @@ public class UIManager : MonoBehaviour
 
     [Header("채팅창")]
     [SerializeField] public InputField chat;
+    public bool canchat { get; private set; }
 
 
 
@@ -61,6 +63,8 @@ public class UIManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        chat.onEndEdit.AddListener(OnChatEndEdit);
+        canchat = true;
     }
 
 
@@ -108,6 +112,7 @@ public class UIManager : MonoBehaviour
                 }
             }
         }
+        upgrade.gameObject.SetActive(false);
     }
     public void HpSet(int MaxHp, int currentHp)
     {
@@ -262,24 +267,46 @@ public class UIManager : MonoBehaviour
 
     public void Chat()
     {
-        if (!chat.gameObject.activeSelf)
+        if (canchat)
         {
-            chat.gameObject.SetActive(true);
+            canchat = false;
             chat.ActivateInputField();
             chat.Select();
         }
         else
         {
-
-            switch (chat.text)
-            {
-                case "showmethemoney":GameManager.instance.SHOWMETHEMONEY(); break;
-                case "poweroverwhelming": GameManager.instance.PowerOverwhelming(); break;
-                case "blacksheepwall": GameManager.instance.BlackSheepWall(); break;
-            }
-            chat.text = "";
-            chat.DeactivateInputField();
-            chat.gameObject.SetActive(false);
+            canchat = true;
+            ESC();
+            PlayerUISet();
         }
+       
+    }
+    private void OnChatEndEdit(string inputText)
+    {
+        // 특정 키 입력을 받으면 실행할 동작을 수행합니다.
+        switch (inputText)
+        {
+            case "showmethemoney":
+                GameManager.instance.SHOWMETHEMONEY();
+                break;
+            case "poweroverwhelming":
+                GameManager.instance.PowerOverwhelming();
+                break;
+            case "blacksheepwall":
+                GameManager.instance.BlackSheepWall();
+                break;
+        }
+        chat.text = "";
+        ESC();
+        PlayerUISet();
+        canchat = true;
+    }
+    public void UpgradeEnd(int index)
+    {
+        upgradeUI[index].TryGetComponent(out Image imgae);
+        upgradeUI[index].TryGetComponent(out Button button);
+        imgae.enabled = false;
+        button.enabled = false;
+
     }
 }
