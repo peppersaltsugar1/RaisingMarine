@@ -5296,7 +5296,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &5439052609611273982
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5331,6 +5331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 428c87813bc3d0142a78548d59a0e8e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterName: 
   currentHp: 0
   isdead: 0
   timebetAttack: 0.5
