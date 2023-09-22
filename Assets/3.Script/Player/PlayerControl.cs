@@ -114,65 +114,61 @@ public class PlayerControl : MonoBehaviour,ITakeDamage
     {
         if (!isDead)
         {
-
-                if (Input.GetMouseButton(1))
-                {
-                    RaycastHit hit;
-                    if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit))
-                    {
-                        if (hit.collider.gameObject.CompareTag("Enemy"))
-                        {
-                            target = hit.transform;
-                            OnTarget(target);
-                        }
-                        else
-                        {
-                            SetDestination(hit.point);
-                        }
-                    }
-                    LookMoveDirection();
-                }
-            if (UIManager.instance.canchat)
+            if (Input.GetMouseButton(1))
             {
-                if (canSkill)
+                RaycastHit hit;
+                if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit))
                 {
-                    if (Input.GetKeyDown(KeyCode.M))
+                    if (hit.collider.gameObject.CompareTag("Enemy"))
                     {
-                        Move_btn();
+                        target = hit.transform;
+                        OnTarget(target);
                     }
-                    if (Input.GetKeyDown(KeyCode.A))
+                    else
                     {
-                        Attack_btn();
-                    }
-                    if (Input.GetKeyDown(KeyCode.B))
-                    {
-                        Return();
-                    }
-                    if (Input.GetKeyDown(KeyCode.W))
-                    {
-                        TelePort();
-                    }
-                    if (Input.GetKeyDown(KeyCode.T))
-                    {
-                        Steam();
-                    }
-                    if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        SkillAtk();
-                    }
-                    if (Input.GetKeyDown(KeyCode.H))
-                    {
-                        Heal();
+                        SetDestination(hit.point);
                     }
                 }
-                if (Input.GetKeyDown(KeyCode.Minus))
+                LookMoveDirection();
+            }
+            if (canSkill)
+            {
+                if (Input.GetKeyDown(KeyCode.M))
                 {
-                    SHOWMETHEMONEY();
+                    Move_btn();
                 }
-                if (Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown(KeyCode.A))
                 {
-                    UIManager.instance.Chat();
+                    Attack_btn();
                 }
+                if (Input.GetKeyDown(KeyCode.B))
+                {
+                    Return();
+                }
+                if (Input.GetKeyDown(KeyCode.W))
+                {
+                    TelePort();
+                }
+                if (Input.GetKeyDown(KeyCode.T))
+                {
+                    Steam();
+                }
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    SkillAtk();
+                }
+                if (Input.GetKeyDown(KeyCode.H))
+                {
+                    Heal();
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Minus))
+            {
+                SHOWMETHEMONEY();
+            }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                UIManager.instance.Chat();
             }
             
             //PlayerMove();

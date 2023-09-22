@@ -71,14 +71,13 @@ public class GameManager : MonoBehaviour
     public void SHOWMETHEMONEY()
     {
         player.money += 10000;
-        UIManager.instance.MoneySet(player.money, playerNum - 1);
+        UIManager.instance.MoneySet(10000, playerNum - 1);
     }
 
 
     public void PowerOverwhelming()
     {
         player.MaxHp = 99999;
-        player.setMaxHp = 99999;
         player.currentHp = 99999;
         player.Def = 255;
         UIManager.instance.HpSet(99999,99999);
@@ -87,7 +86,7 @@ public class GameManager : MonoBehaviour
 
     public void BlackSheepWall()
     {
-        GameObject obj = GameObject.Find("[RUNTIME] Fog_Plane");
+        GameObject obj = GameObject.Find("ObjectName");
         if (obj != null)
         {
             obj.SetActive(false);

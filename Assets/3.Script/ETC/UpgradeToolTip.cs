@@ -19,7 +19,7 @@ public class UpgradeToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
         else
         {
-            upgrade = player.Def.ToString()+"+"+ (player.defUp * player.defkPower).ToString();
+            upgrade = "0"+"+"+ (player.defUp * player.defkPower).ToString();
 
         }
         Vector3 movePos = new Vector3(transform.position.x+100, transform.position.y+80, transform.position.z);
